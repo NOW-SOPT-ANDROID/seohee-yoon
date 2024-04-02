@@ -44,7 +44,7 @@
         android:id="@+id/tv_login_pw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PW"
+        android:text="비밀번호"
         android:textSize="24sp"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="30dp"
