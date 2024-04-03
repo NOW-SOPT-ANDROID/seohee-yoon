@@ -37,6 +37,12 @@ class LoginActivity : AppCompatActivity() {
 
                 binding.btnLogin.setOnClickListener{
                     if (id == binding.etLoginId.text.toString() && pw == binding.etLoginPw.text.toString()) {
+                        Snackbar.make(
+                            binding.root,
+                            "로그인 성공",
+                            Snackbar.LENGTH_LONG
+                        ).show()
+
                         val intent = Intent(this, MainActivity::class.java)
                         intent.putExtra("id", id)
                         intent.putExtra("pw", pw)
