@@ -39,7 +39,7 @@ class SignUpActivity : AppCompatActivity() {
                         Snackbar.make(
                             binding.root,
                             "회원가입이 완료되었습니다",
-                            Snackbar.LENGTH_SHORT
+                            Snackbar.LENGTH_LONG
                         ).show()
 
                         setResult(RESULT_OK, intent)
