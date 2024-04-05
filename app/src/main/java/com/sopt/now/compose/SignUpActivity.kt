@@ -1,5 +1,7 @@
 package com.sopt.now.compose
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -163,7 +165,15 @@ fun SignUp() {
                                 duration = SnackbarDuration.Long)
                             }
 
-                            context.startActivity(Intent(context, LoginActivity::class.java))
+                            val intent = Intent(context, LoginActivity::class.java).apply {
+                                putExtra("userId", userId)
+                                putExtra("password", password)
+                                putExtra("nickname", nickname)
+                                putExtra("mbti", mbti)
+                            }
+
+                            (context as? Activity)?.setResult(RESULT_OK, intent)
+                            (context as? Activity)?.finish()
                         }
                     }
                 },
