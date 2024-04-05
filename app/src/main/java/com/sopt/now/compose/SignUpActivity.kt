@@ -179,7 +179,7 @@ fun SignUp() {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 12.dp, bottom = 12.dp)) {
+                    .padding(top = 16.dp)) {
                 Text(text = "회원가입 하기")
             }
         }
