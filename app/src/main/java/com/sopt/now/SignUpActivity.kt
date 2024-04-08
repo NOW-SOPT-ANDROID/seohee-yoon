@@ -16,6 +16,10 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initSignupBtnClickListener()
+    }
+
+    private fun initSignupBtnClickListener() {
         binding.btnSignup.setOnClickListener {
             val userID = binding.etSignupId.text.toString()
             val userPw = binding.etSignupPw.text.toString()

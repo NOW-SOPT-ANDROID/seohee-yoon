@@ -2,7 +2,6 @@ package com.sopt.now
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -23,8 +22,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         getResultSignup()
-        goToSignup()
-        clickLogin()
+        initSignupBtnClickListener()
+        initLoginBtnClickListener()
     }
 
     private fun getResultSignup() {
@@ -43,14 +42,14 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToSignup() {
+    private fun initSignupBtnClickListener() {
         binding.btnSignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             resultLauncher.launch(intent)
         }
     }
 
-    private fun clickLogin() {
+    private fun initLoginBtnClickListener() {
         binding.btnLogin.setOnClickListener{
             if (userId == binding.etLoginId.text.toString() && userPw == binding.etLoginPw.text.toString()) {
                 Snackbar.make(

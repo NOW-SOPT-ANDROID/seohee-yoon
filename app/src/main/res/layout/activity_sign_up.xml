@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/layout_signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignUpActivity">
@@ -100,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@id/et_signup_nickname" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_signup_mbti"
+        android:id="@+id/layout_signup_mbti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
@@ -113,18 +113,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/cl_signup_mbti"
-            app:layout_constraintTop_toTopOf="@+id/cl_signup_mbti">
+            app:layout_constraintStart_toStartOf="@id/layout_signup_mbti"
+            app:layout_constraintTop_toTopOf="@+id/layout_signup_mbti">
 
             <RadioButton
-                android:id="@+id/rb_e"
+                android:id="@+id/rb_signup_e"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:text="E" />
 
             <RadioButton
-                android:id="@+id/rb_i"
+                android:id="@+id/rb_signup_i"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="I" />
@@ -136,17 +136,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@id/cl_signup_mbti"
-            app:layout_constraintTop_toTopOf="@+id/cl_signup_mbti">
+            app:layout_constraintEnd_toEndOf="@id/layout_signup_mbti"
+            app:layout_constraintTop_toTopOf="@+id/layout_signup_mbti">
 
             <RadioButton
-                android:id="@+id/rb_s"
+                android:id="@+id/rb_signup_s"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="S" />
 
             <RadioButton
-                android:id="@+id/rb_n"
+                android:id="@+id/rb_signup_n"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
@@ -159,18 +159,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/cl_signup_mbti"
+            app:layout_constraintStart_toStartOf="@id/layout_signup_mbti"
             app:layout_constraintTop_toBottomOf="@+id/rg_signup_ei">
 
             <RadioButton
-                android:id="@+id/rb_t"
+                android:id="@+id/rb_signup_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:text="T" />
 
             <RadioButton
-                android:id="@+id/rb_f"
+                android:id="@+id/rb_signup_f"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="F" />
@@ -182,17 +182,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@id/cl_signup_mbti"
+            app:layout_constraintEnd_toEndOf="@id/layout_signup_mbti"
             app:layout_constraintTop_toBottomOf="@+id/rg_signup_sn">
 
             <RadioButton
-                android:id="@+id/rb_j"
+                android:id="@+id/rb_signup_j"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="J" />
 
             <RadioButton
-                android:id="@+id/rb_p"
+                android:id="@+id/rb_signup_p"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
