@@ -43,14 +43,14 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initSignupBtnClickListener() {
-        binding.btnSignup.setOnClickListener {
+        binding.btnLoginToSignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             resultLauncher.launch(intent)
         }
     }
 
     private fun initLoginBtnClickListener() {
-        binding.btnLogin.setOnClickListener{
+        binding.btnLoginToSignin.setOnClickListener{
             if (userId == binding.etLoginId.text.toString() && userPw == binding.etLoginPw.text.toString()) {
                 Snackbar.make(
                     binding.root,
