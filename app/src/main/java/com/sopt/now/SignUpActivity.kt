@@ -3,6 +3,7 @@ package com.sopt.now
 import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.Nickname
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.databinding.ActivitySignUpBinding
@@ -20,7 +21,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun initSignupBtnClickListener() {
-        binding.btnSignup.setOnClickListener {
+        binding.btnLoginToSignup.setOnClickListener {
             val userID = binding.etSignupId.text.toString()
             val userPw = binding.etSignupPw.text.toString()
             val userNickname = binding.etSignupNickname.text.toString()
@@ -43,11 +44,7 @@ class SignUpActivity : AppCompatActivity() {
         intent.putExtra("pw", binding.etSignupPw.text.toString())
         intent.putExtra("nickname", binding.etSignupNickname.text.toString())
 
-        Snackbar.make(
-            binding.root,
-            "회원가입이 완료되었습니다",
-            Snackbar.LENGTH_LONG
-        ).show()
+        Toast.makeText(this, "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show()
 
         setResult(RESULT_OK, intent)
         finish()

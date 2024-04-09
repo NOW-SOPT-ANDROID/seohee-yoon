@@ -17,8 +17,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.tvMainNickname.text = intent.getStringExtra("nickname")
-        binding.tvMainId.text = intent.getStringExtra("id")
-        binding.tvMainPw.text = intent.getStringExtra("pw")
+        intent.apply {
+            binding.tvMainNickname.text = getStringExtra("nickname")
+            binding.tvMainId.text = getStringExtra("id")
+            binding.tvMainPw.text = getStringExtra("pw")
+        }
     }
 }

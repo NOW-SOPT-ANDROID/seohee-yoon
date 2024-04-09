@@ -2,6 +2,7 @@ package com.sopt.now
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,12 @@ class LoginActivity : AppCompatActivity() {
     private var userId:String ?= null
     private var userPw:String ?= null
     private var userNickname:String ?= null
+
+    companion object {
+        const val ID = "id"
+        const val PW = "pw"
+        const val NICKNAME = "nickname"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +39,9 @@ class LoginActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 val data: Intent? = result.data
 
-                userId = data?.getStringExtra("id")
-                userPw = data?.getStringExtra("pw")
-                userNickname = data?.getStringExtra("nickname")
+                userId = data?.getStringExtra(ID)
+                userPw = data?.getStringExtra(PW)
+                userNickname = data?.getStringExtra(NICKNAME)
 
                 binding.etLoginId.setText(userId)
                 binding.etLoginPw.setText(userPw)
@@ -52,16 +59,16 @@ class LoginActivity : AppCompatActivity() {
     private fun initLoginBtnClickListener() {
         binding.btnLoginToSignin.setOnClickListener{
             if (userId == binding.etLoginId.text.toString() && userPw == binding.etLoginPw.text.toString()) {
-                Snackbar.make(
-                    binding.root,
-                    "로그인 성공",
-                    Snackbar.LENGTH_LONG
-                ).show()
+                Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("id", userId)
-                intent.putExtra("pw", userPw)
-                intent.putExtra("nickname", userNickname)
+
+                intent.apply {
+                    putExtra("id", userId)
+                    putExtra("pw", userPw)
+                    putExtra("nickname", userNickname)
+                }
+
                 startActivity(intent)
             } else {
                 Snackbar.make(
