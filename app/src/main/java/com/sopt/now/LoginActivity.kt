@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initSignupBtnClickListener() {
-        binding.btnLoginToSignup.setOnClickListener {
+        binding.btnSignupToSignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             resultLauncher.launch(intent)
         }
