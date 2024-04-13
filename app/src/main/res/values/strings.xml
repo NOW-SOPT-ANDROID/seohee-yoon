@@ -1,3 +1,33 @@
 <resources>
+    <!-- 로그인 페이지 -->
     <string name="app_name">NOW SOPT Android</string>
+    <string name="tv_login_title">Welcome to SOPT</string>
+    <string name="tv_login_id">ID</string>
+    <string name="tv_login_pw">비밀번호</string>
+    <string name="et_login_id_hint">아이디를 입력해주세요</string>
+    <string name="et_login_pw_hint">비밀번호를 입력해주세요</string>
+    <string name="btn_login_to_signin">로그인 하기</string>
+    <string name="btn_login_to_signup">회원가입 하기</string>
+
+    <!-- 회원가입 페이지 -->
+    <string name="tv_signup_title">SIGN UP</string>
+    <string name="tv_signup_id">ID</string>
+    <string name="et_signup_id_hint">아이디를 입력해주세요</string>
+    <string name="tv_signup_pw">비밀번호</string>
+    <string name="et_signup_pw_hint">비밀번호를 입력해주세요</string>
+    <string name="tv_signup_nickname">닉네임</string>
+    <string name="tv_signup_mbti">MBTI</string>
+    <string name="rb_signup_mbti_e">E</string>
+    <string name="rb_signup_mbti_i">I</string>
+    <string name="rb_signup_mbti_s">S</string>
+    <string name="rb_signup_mbti_n">N</string>
+    <string name="rb_signup_mbti_t">T</string>
+    <string name="rb_signup_mbti_f">F</string>
+    <string name="rb_signup_mbti_j">J</string>
+    <string name="rb_signup_mbti_p">P</string>
+    <string name="btn_signup_to_signup">회원가입 하기</string>
+
+    <!-- 메인 페이지 -->
+    <string name="tv_main_id_title">ID</string>
+    <string name="tv_main_pw_title">PW</string>
 </resources>

@@ -1,15 +1,27 @@
 package com.sopt.now
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.sopt.now.LoginActivity.Companion.ID
+import com.sopt.now.LoginActivity.Companion.NICKNAME
+import com.sopt.now.LoginActivity.Companion.PW
+import com.sopt.now.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        getData()
+    }
+
+    private fun getData() {
+        intent.apply {
+            binding.tvMainNickname.text = getStringExtra(NICKNAME)
+            binding.tvMainId.text = getStringExtra(ID)
+            binding.tvMainPw.text = getStringExtra(PW)
+        }
     }
 }
