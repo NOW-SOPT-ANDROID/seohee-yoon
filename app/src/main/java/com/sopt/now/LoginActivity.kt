@@ -64,9 +64,9 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
 
                 intent.apply {
-                    putExtra("id", userId)
-                    putExtra("pw", userPw)
-                    putExtra("nickname", userNickname)
+                    putExtra(ID, userId)
+                    putExtra(PW, userPw)
+                    putExtra(NICKNAME, userNickname)
                 }
 
                 startActivity(intent)

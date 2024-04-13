@@ -2,6 +2,9 @@ package com.sopt.now
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.sopt.now.LoginActivity.Companion.ID
+import com.sopt.now.LoginActivity.Companion.NICKNAME
+import com.sopt.now.LoginActivity.Companion.PW
 import com.sopt.now.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -16,9 +19,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun getData() {
         intent.apply {
-            binding.tvMainNickname.text = getStringExtra("nickname")
-            binding.tvMainId.text = getStringExtra("id")
-            binding.tvMainPw.text = getStringExtra("pw")
+            binding.tvMainNickname.text = getStringExtra(NICKNAME)
+            binding.tvMainId.text = getStringExtra(ID)
+            binding.tvMainPw.text = getStringExtra(PW)
         }
     }
 }
