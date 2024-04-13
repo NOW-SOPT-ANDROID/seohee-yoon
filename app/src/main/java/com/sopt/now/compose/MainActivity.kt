@@ -4,20 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -35,11 +29,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Main(
+                    MainScreen(
                         intent.getStringExtra("userId"),
-                        intent.getStringExtra("password"),
-                        intent.getStringExtra("nickname"),
-                        intent.getStringExtra("mbti")
+                        intent.getStringExtra("userPw"),
+                        intent.getStringExtra("userNickname"),
+                        intent.getStringExtra("userMbti")
                     )
                 }
             }
@@ -49,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun Main(userId: String?, password: String?, nickname: String?, mbti: String?) {
+fun MainScreen(userId: String?, userPw: String?, userNickname: String?, userMbti: String?) {
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier.padding(30.dp)
@@ -63,7 +57,7 @@ fun Main(userId: String?, password: String?, nickname: String?, mbti: String?) {
                     contentDescription = "profile"
             )
             Text(
-                text = "$nickname",
+                text = "$userNickname",
                 fontSize = 20.sp,
                 modifier = Modifier.padding(start = 16.dp)
             )
@@ -82,7 +76,7 @@ fun Main(userId: String?, password: String?, nickname: String?, mbti: String?) {
             modifier = Modifier.padding(top = 20.dp)
         )
         Text(
-            text = "$password",
+            text = "$userPw",
             fontSize = 20.sp)
         Text(
             text = "MBTI",
@@ -90,7 +84,7 @@ fun Main(userId: String?, password: String?, nickname: String?, mbti: String?) {
             modifier = Modifier.padding(top = 20.dp)
         )
         Text(
-            text = "$mbti",
+            text = "$userMbti",
             fontSize = 20.sp)
     }
 }
@@ -99,6 +93,6 @@ fun Main(userId: String?, password: String?, nickname: String?, mbti: String?) {
 @Composable
 fun DefaultPreview() {
     NOWSOPTAndroidTheme {
-        Main("userId", "password", "nickname", "mbti")
+        MainScreen("userId", "userPw", "userNickname", "userMbti")
     }
 }

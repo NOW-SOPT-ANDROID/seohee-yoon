@@ -58,8 +58,8 @@ class LoginActivity : ComponentActivity() {
 fun LoginScreen() {
     var userId by remember { mutableStateOf("") }
     var userPw by remember { mutableStateOf("") }
-    var nickname by remember { mutableStateOf("") }
-    var mbti by remember { mutableStateOf("") }
+    var userNickname by remember { mutableStateOf("") }
+    var userMbti by remember { mutableStateOf("") }
 
     var id by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
@@ -75,9 +75,9 @@ fun LoginScreen() {
                 val data = result.data
 
                 userId = data?.getStringExtra("userId").toString()
-                userPw = data?.getStringExtra("password").toString()
-                nickname = data?.getStringExtra("nickname").toString()
-                mbti = data?.getStringExtra("mbti").toString()
+                userPw = data?.getStringExtra("userPw").toString()
+                userNickname = data?.getStringExtra("userNickname").toString()
+                userMbti = data?.getStringExtra("userMbti").toString()
             }
         }
 
@@ -130,16 +130,16 @@ fun LoginScreen() {
 
             Button(
                 onClick = {
-                    if (userId == id && userPw == pw && userId != "" && userPw != "") {
+                    if (userId == id && userPw == pw && userId.isNotEmpty() && userPw.isNotEmpty()) {
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("로그인 성공")
                         }
                         val intent = Intent(context, MainActivity::class.java)
 
                         intent.putExtra("userId", userId)
-                        intent.putExtra("password", userPw)
-                        intent.putExtra("nickname", nickname)
-                        intent.putExtra("mbti", mbti)
+                        intent.putExtra("userPw", userPw)
+                        intent.putExtra("userNickname", userNickname)
+                        intent.putExtra("userMbti", userMbti)
 
                         (context as? Activity)?.setResult(RESULT_OK, intent)
                         (context as? Activity)?.finish()

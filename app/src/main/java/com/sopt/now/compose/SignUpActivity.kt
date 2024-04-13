@@ -45,7 +45,7 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SignUp()
+                    SignUpScreen()
                 }
             }
         }
@@ -54,11 +54,11 @@ class SignUpActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun SignUp() {
+fun SignUpScreen() {
     var userId by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var nickname by remember { mutableStateOf("") }
-    var mbti by remember { mutableStateOf("") }
+    var userPassword by remember { mutableStateOf("") }
+    var userNickname by remember { mutableStateOf("") }
+    var userMbti by remember { mutableStateOf("") }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -98,8 +98,8 @@ fun SignUp() {
                 modifier = Modifier.padding(top = 30.dp),
             )
             TextField(
-                value = password,
-                onValueChange = {password = it},
+                value = userPassword,
+                onValueChange = {userPassword = it},
                 label = { Text("비밀번호를 입력해주세요") },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
@@ -112,8 +112,8 @@ fun SignUp() {
                 modifier = Modifier.padding(top = 30.dp)
             )
             TextField(
-                value = nickname,
-                onValueChange = {nickname = it},
+                value = userNickname,
+                onValueChange = {userNickname = it},
                 label = { Text("닉네임을 입력해주세요") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -125,8 +125,8 @@ fun SignUp() {
                 modifier = Modifier.padding(top = 30.dp)
             )
             TextField(
-                value = mbti,
-                onValueChange = {mbti = it},
+                value = userMbti,
+                onValueChange = {userMbti = it},
                 label = { Text("MBTI를 입력해주세요") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -144,14 +144,14 @@ fun SignUp() {
                                 duration = SnackbarDuration.Short)
                             }
                         }
-                        password.length !in 8..12 -> {
+                        userPassword.length !in 8..12 -> {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
                                 "비밀번호는 8자 이상 16자 이하여야 합니다",
                                 duration = SnackbarDuration.Short)
                             }
                         }
-                        nickname.isBlank() -> {
+                        userNickname.isBlank() -> {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
                                 "닉네임을 입력해주세요",
@@ -167,9 +167,9 @@ fun SignUp() {
 
                             val intent = Intent(context, LoginActivity::class.java).apply {
                                 putExtra("userId", userId)
-                                putExtra("password", password)
-                                putExtra("nickname", nickname)
-                                putExtra("mbti", mbti)
+                                putExtra("userPw", userPassword)
+                                putExtra("userNickname", userNickname)
+                                putExtra("userMbti", userMbti)
                             }
 
                             (context as? Activity)?.setResult(RESULT_OK, intent)
