@@ -30,9 +30,12 @@
     <!-- 메인 페이지 -->
     <string name="tv_main_id_title">ID</string>
     <string name="tv_main_pw_title">PW</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- 메뉴 -->
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
     <string name="menu_my_page">My Page</string>
+
+    <!-- 마이페이지 -->
+    <string name="btn_mypage_logout">로그아웃</string>
 </resources>

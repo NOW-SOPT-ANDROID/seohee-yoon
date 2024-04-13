@@ -16,11 +16,13 @@ class LoginActivity : AppCompatActivity() {
     private var userId:String ?= null
     private var userPw:String ?= null
     private var userNickname:String ?= null
+    private var userMbti:String ?= null
 
     companion object {
         const val ID = "id"
         const val PW = "pw"
         const val NICKNAME = "nickname"
+        const val MBTI = "mbti"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
                 userId = data?.getStringExtra(ID)
                 userPw = data?.getStringExtra(PW)
                 userNickname = data?.getStringExtra(NICKNAME)
+                userMbti = data?.getStringExtra(MBTI)
 
                 binding.etLoginId.setText(userId)
                 binding.etLoginPw.setText(userPw)
@@ -67,6 +70,7 @@ class LoginActivity : AppCompatActivity() {
                     putExtra(ID, userId)
                     putExtra(PW, userPw)
                     putExtra(NICKNAME, userNickname)
+                    putExtra(MBTI, userMbti)
                 }
 
                 startActivity(intent)
