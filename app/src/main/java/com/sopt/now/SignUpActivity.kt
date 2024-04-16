@@ -1,5 +1,6 @@
 package com.sopt.now
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -44,16 +45,22 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun checkedSignup() {
-        val intent = Intent()
-        intent.putExtra(ID, binding.etSignupId.text.toString())
-        intent.putExtra(PW, binding.etSignupPw.text.toString())
-        intent.putExtra(NICKNAME, binding.etSignupNickname.text.toString())
-        intent.putExtra(MBTI, binding.etSignupMbti.text.toString())
+        val sharedPreferences = getSharedPreferences("pref", Context.MODE_PRIVATE)
+        val edit = sharedPreferences.edit()
 
         Toast.makeText(this, "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show()
 
-        setResult(RESULT_OK, intent)
-        finish()
+        edit.apply {
+            putString(ID, binding.etSignupId.text.toString())
+            putString(PW, binding.etSignupPw.text.toString())
+            putString(NICKNAME, binding.etSignupNickname.text.toString())
+            putString(MBTI, binding.etSignupMbti.text.toString())
+
+            apply()
+        }
+
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showMessage(message: String)

@@ -1,22 +1,21 @@
 package com.sopt.now
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
-    private var userId:String ?= null
-    private var userPw:String ?= null
-    private var userNickname:String ?= null
-    private var userMbti:String ?= null
+    private var userId: String? = null
+    private var userPw: String? = null
+    private var userNickname: String? = null
+    private var userMbti: String? = null
 
     companion object {
         const val ID = "id"
@@ -36,43 +35,29 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun getResultSignup() {
-        resultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val data: Intent? = result.data
+        val sharedPreferences = getSharedPreferences("pref", Context.MODE_PRIVATE)
 
-                userId = data?.getStringExtra(ID)
-                userPw = data?.getStringExtra(PW)
-                userNickname = data?.getStringExtra(NICKNAME)
-                userMbti = data?.getStringExtra(MBTI)
-
-                binding.etLoginId.setText(userId)
-                binding.etLoginPw.setText(userPw)
-            }
-        }
+        userId = sharedPreferences.getString(ID, "")
+        userPw = sharedPreferences.getString(PW, "")
+        userNickname = sharedPreferences.getString(NICKNAME, "")
+        userMbti = sharedPreferences.getString(MBTI, "")
     }
 
     private fun initSignupBtnClickListener() {
         binding.btnSignupToSignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
-            resultLauncher.launch(intent)
+            startActivity(intent)
         }
     }
 
     private fun initLoginBtnClickListener() {
-        binding.btnLoginToSignin.setOnClickListener{
+        binding.btnLoginToSignin.setOnClickListener {
+            Log.d("seohee", "input id:${binding.etLoginId.text}, input pw:${binding.etLoginPw.text}")
+            Log.d("seohee", "id:${userId}, pw: $userPw")
             if (userId == binding.etLoginId.text.toString() && userPw == binding.etLoginPw.text.toString()) {
                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(this, MainActivity::class.java)
-
-                intent.apply {
-                    putExtra(ID, userId)
-                    putExtra(PW, userPw)
-                    putExtra(NICKNAME, userNickname)
-                    putExtra(MBTI, userMbti)
-                }
-
                 startActivity(intent)
             } else {
                 Snackbar.make(
