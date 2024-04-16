@@ -6,7 +6,6 @@ import com.sopt.now.databinding.ItemFriendBinding
 class FriendViewHolder(private val binding: ItemFriendBinding) : RecyclerView.ViewHolder(binding.root) {
     fun onBind(friendData: Friend) {
         binding.run {
-            ivItemProfile.setImageResource(friendData.profileImage)
             tvItemName.text = friendData.name
             tvItemMbti.text = friendData.mbti
         }
