@@ -3,21 +3,28 @@ package com.sopt.now.compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,70 +36,63 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(
-                        intent.getStringExtra("userId"),
-                        intent.getStringExtra("userPw"),
-                        intent.getStringExtra("userNickname"),
-                        intent.getStringExtra("userMbti")
-                    )
+                    MainScreen()
                 }
             }
         }
     }
 }
 
-
 @Composable
-fun MainScreen(userId: String?, userPw: String?, userNickname: String?, userMbti: String?) {
-    Column(
-        horizontalAlignment = Alignment.Start,
-        modifier = Modifier.padding(30.dp)
-    ) {
-        Row (
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Image(
-                painter = painterResource(
-                    id = R.drawable.ic_launcher_background),
-                    contentDescription = "profile"
-            )
-            Text(
-                text = "$userNickname",
-                fontSize = 20.sp,
-                modifier = Modifier.padding(start = 16.dp)
-            )
+fun MainScreen() {
+    var selectedItem by remember { mutableIntStateOf(0) }
+    val items = listOf(
+        BottomNavigationItem(
+            icon = Icons.Filled.Home,
+            label = "Home"
+        ),
+        BottomNavigationItem(
+            icon = Icons.Filled.Search,
+            label = "Search"
+        ),
+        BottomNavigationItem(
+            icon = Icons.Filled.Person,
+            label = "Mypage"
+        )
+    )
+
+    Scaffold(
+        bottomBar = {
+            NavigationBar {
+                items.forEachIndexed { index, item ->
+                    NavigationBarItem(
+                        icon = { Icon(item.icon, contentDescription = item.label) },
+                        label = { Text(item.label) },
+                        selected = selectedItem == index,
+                        onClick = { selectedItem = index }
+                    )
+                }
+            }
         }
-        Text(
-            text = "ID",
-            fontSize = 24.sp,
-            modifier = Modifier.padding(top = 20.dp)
-        )
-        Text(
-            text = "$userId",
-            fontSize = 20.sp)
-        Text(
-            text = "비밀번호",
-            fontSize = 24.sp,
-            modifier = Modifier.padding(top = 20.dp)
-        )
-        Text(
-            text = "$userPw",
-            fontSize = 20.sp)
-        Text(
-            text = "MBTI",
-            fontSize = 24.sp,
-            modifier = Modifier.padding(top = 20.dp)
-        )
-        Text(
-            text = "$userMbti",
-            fontSize = 20.sp)
-    }
-}
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            when (selectedItem) {
+                0 -> {
+                    HomeScreen()
+                }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    NOWSOPTAndroidTheme {
-        MainScreen("userId", "userPw", "userNickname", "userMbti")
+                1 -> {
+                    Text(text = "Search Screen")
+                }
+
+                2 -> {
+                    MyPageScreen()
+                }
+            }
+        }
     }
 }
