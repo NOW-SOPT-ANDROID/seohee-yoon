@@ -2,8 +2,11 @@ package com.sopt.now.compose
 
 import android.app.Activity
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -55,14 +58,18 @@ class SignUpActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun SignUpScreen() {
+    val context = LocalContext.current
+
     var userId by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
     var userNickname by remember { mutableStateOf("") }
     var userMbti by remember { mutableStateOf("") }
 
+    val sharedPreferences:SharedPreferences = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
+    val edit = sharedPreferences.edit()
+
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -165,15 +172,17 @@ fun SignUpScreen() {
                                 duration = SnackbarDuration.Long)
                             }
 
-                            val intent = Intent(context, LoginActivity::class.java).apply {
-                                putExtra("userId", userId)
-                                putExtra("userPw", userPassword)
-                                putExtra("userNickname", userNickname)
-                                putExtra("userMbti", userMbti)
+                            edit.apply {
+                                putString("userId", userId)
+                                putString("userPassword", userPassword)
+                                putString("userNickname", userNickname)
+                                putString("userMbti", userMbti)
                             }
 
-                            (context as? Activity)?.setResult(RESULT_OK, intent)
-                            (context as? Activity)?.finish()
+                            edit.apply()
+
+                            val intent = Intent(context, LoginActivity::class.java)
+                            context.startActivity(intent)
                         }
                     }
                 },

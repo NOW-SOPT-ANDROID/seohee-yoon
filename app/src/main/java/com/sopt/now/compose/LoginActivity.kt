@@ -1,13 +1,12 @@
 package com.sopt.now.compose
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -57,7 +56,7 @@ class LoginActivity : ComponentActivity() {
 @Composable
 fun LoginScreen() {
     var userId by remember { mutableStateOf("") }
-    var userPw by remember { mutableStateOf("") }
+    var userPassword by remember { mutableStateOf("") }
     var userNickname by remember { mutableStateOf("") }
     var userMbti by remember { mutableStateOf("") }
 
@@ -68,18 +67,14 @@ fun LoginScreen() {
     val coroutineScope = rememberCoroutineScope()
 
     val context = LocalContext.current
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
 
-    val launcher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val data = result.data
-
-                userId = data?.getStringExtra("userId").toString()
-                userPw = data?.getStringExtra("userPw").toString()
-                userNickname = data?.getStringExtra("userNickname").toString()
-                userMbti = data?.getStringExtra("userMbti").toString()
-            }
-        }
+    sharedPreferences.apply {
+        userId = getString("userId", userId).toString()
+        userPassword = getString("userPassword", userPassword).toString()
+        userNickname = getString("userNickname", userNickname).toString()
+        userMbti = getString("userMbti", userMbti).toString()
+    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -130,20 +125,11 @@ fun LoginScreen() {
 
             Button(
                 onClick = {
-                    if (userId == id && userPw == pw && userId.isNotEmpty() && userPw.isNotEmpty()) {
+                    if (userId == id && userPassword == pw && userId.isNotEmpty() && userPassword.isNotEmpty()) {
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("로그인 성공")
                         }
                         val intent = Intent(context, MainActivity::class.java)
-
-                        intent.putExtra("userId", userId)
-                        intent.putExtra("userPw", userPw)
-                        intent.putExtra("userNickname", userNickname)
-                        intent.putExtra("userMbti", userMbti)
-
-                        (context as? Activity)?.setResult(RESULT_OK, intent)
-                        (context as? Activity)?.finish()
-
                         context.startActivity(intent)
                     } else {
                         coroutineScope.launch {
@@ -160,7 +146,8 @@ fun LoginScreen() {
 
             Button(
                 onClick = {
-                    launcher.launch(Intent(context, SignUpActivity::class.java))
+                    val intent = Intent(context, SignUpActivity::class.java)
+                    context.startActivity(intent)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
