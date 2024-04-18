@@ -1,5 +1,7 @@
 package com.sopt.now
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +18,8 @@ class HomeFragment : Fragment() {
     private val binding: FragmentHomeBinding
         get() = _binding ?: throw IllegalStateException("Binding is null")
 
-    private lateinit var friendAdapter: FriendAdapter
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var friendAdapter: MultiAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,8 +32,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPreferences = requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
 
-        friendAdapter = FriendAdapter()
+        friendAdapter = MultiAdapter()
         binding.rvHomeFriends.apply {
             adapter = friendAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -39,15 +43,34 @@ class HomeFragment : Fragment() {
         loadFriendList()
     }
 
+    private fun getUserData(): User? {
+        binding.apply {
+            val userNickname = sharedPreferences.getString(LoginActivity.NICKNAME, "")
+            val userMbti = sharedPreferences.getString(LoginActivity.MBTI, "")
+
+            return User(userNickname.toString(), userMbti.toString())
+        }
+    }
+
     private fun loadFriendList() {
         val jsonString = getJsonDataFromAsset()
+        val user = getUserData()
+
         val gson = Gson()
         val friendType = object : TypeToken<List<Friend>>() {}.type
 
-        jsonString?.let {
-            val friends: List<Friend> = gson.fromJson(it, friendType)
-            friendAdapter.setFriendList(friends)
+        val friendList: List<Friend> = gson.fromJson(jsonString, friendType)
+
+        val userList = mutableListOf<Any>()
+        if (user != null) {
+            userList.add(user)
         }
+
+        val combinedList: MutableList<Any> = mutableListOf()
+        combinedList.addAll(userList)
+        combinedList.addAll(friendList)
+
+        friendAdapter.setItemList(combinedList)
     }
 
     private fun getJsonDataFromAsset(): String? {

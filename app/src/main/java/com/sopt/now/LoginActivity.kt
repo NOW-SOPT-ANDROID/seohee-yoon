@@ -11,6 +11,7 @@ import com.sopt.now.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var user: User
 
     private var userId: String? = null
     private var userPw: String? = null
@@ -41,6 +42,8 @@ class LoginActivity : AppCompatActivity() {
         userPw = sharedPreferences.getString(PW, "")
         userNickname = sharedPreferences.getString(NICKNAME, "")
         userMbti = sharedPreferences.getString(MBTI, "")
+
+        user = User(userNickname?: "", userMbti?: "")
     }
 
     private fun initSignupBtnClickListener() {
@@ -52,8 +55,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initLoginBtnClickListener() {
         binding.btnLoginToSignin.setOnClickListener {
-            Log.d("seohee", "input id:${binding.etLoginId.text}, input pw:${binding.etLoginPw.text}")
-            Log.d("seohee", "id:${userId}, pw: $userPw")
             if (userId == binding.etLoginId.text.toString() && userPw == binding.etLoginPw.text.toString()) {
                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
 
