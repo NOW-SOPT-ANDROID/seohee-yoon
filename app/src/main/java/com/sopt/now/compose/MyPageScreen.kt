@@ -1,6 +1,7 @@
 package com.sopt.now.compose
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,8 +9,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,6 +37,7 @@ import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 fun MyPageScreen() {
     val context:Context = LocalContext.current
     val sharedPreferences: SharedPreferences = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
+    val edit = sharedPreferences.edit()
 
     var userId by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
@@ -86,6 +93,21 @@ fun MyPageScreen() {
         Text(
             text = userMbti,
             fontSize = 20.sp)
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = {
+                val intent = Intent(context, LoginActivity::class.java)
+
+                edit.clear()
+                edit.apply()
+                context.startActivity(intent)
+            },
+            modifier = Modifier.fillMaxWidth()
+            ) {
+            Text(text = "로그아웃")
+        }
     }
 }
 
