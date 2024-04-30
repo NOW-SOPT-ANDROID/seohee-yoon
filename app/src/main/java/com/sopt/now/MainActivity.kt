@@ -7,15 +7,19 @@ import com.sopt.now.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var user: User
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        user = intent.getParcelableExtra<User>("user")!!
+
         val currentFragment = supportFragmentManager.findFragmentById(binding.fcvMain.id)
         if (currentFragment == null) {
             supportFragmentManager.beginTransaction()
-                .add(binding.fcvMain.id, HomeFragment())
+                .add(binding.fcvMain.id, HomeFragment(user))
                 .commit()
         }
 
@@ -26,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding.bnvMain.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.menu_home -> {
-                    replaceFragment(HomeFragment())
+                    replaceFragment(HomeFragment(user))
                     true
                 }
 
@@ -36,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.menu_mypage -> {
-                    replaceFragment(MyPageFragment())
+                    replaceFragment(MyPageFragment(user))
                     true
                 }
 

@@ -1,7 +1,5 @@
 package com.sopt.now
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +11,11 @@ import com.google.gson.reflect.TypeToken
 import com.sopt.now.databinding.FragmentHomeBinding
 import java.io.IOException
 
-class HomeFragment : Fragment() {
+class HomeFragment(private val user: User) : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
         get() = _binding ?: throw IllegalStateException("Binding is null")
 
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var friendAdapter: MultiAdapter
 
     override fun onCreateView(
@@ -32,7 +29,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPreferences = requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
 
         friendAdapter = MultiAdapter()
         binding.rvHomeFriends.apply {
@@ -45,10 +41,7 @@ class HomeFragment : Fragment() {
 
     private fun getUserData(): User? {
         binding.apply {
-            val userNickname = sharedPreferences.getString(LoginActivity.NICKNAME, "")
-            val userMbti = sharedPreferences.getString(LoginActivity.MBTI, "")
-
-            return User(userNickname.toString(), userMbti.toString())
+            return User(user.id, user.password, user.name, user.mbti)
         }
     }
 

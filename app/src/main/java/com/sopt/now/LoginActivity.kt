@@ -1,9 +1,8 @@
 package com.sopt.now
 
-import android.content.Context
+
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -13,18 +12,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var user: User
 
-    private var userId: String? = null
-    private var userPw: String? = null
-    private var userNickname: String? = null
-    private var userMbti: String? = null
-
-    companion object {
-        const val ID = "id"
-        const val PW = "pw"
-        const val NICKNAME = "nickname"
-        const val MBTI = "mbti"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -32,33 +19,28 @@ class LoginActivity : AppCompatActivity() {
 
         getResultSignup()
         initSignupBtnClickListener()
-        initLoginBtnClickListener()
     }
 
     private fun getResultSignup() {
-        val sharedPreferences = getSharedPreferences("pref", Context.MODE_PRIVATE)
-
-        userId = sharedPreferences.getString(ID, "")
-        userPw = sharedPreferences.getString(PW, "")
-        userNickname = sharedPreferences.getString(NICKNAME, "")
-        userMbti = sharedPreferences.getString(MBTI, "")
-
-        user = User(userNickname?: "", userMbti?: "")
+        val user = intent.getParcelableExtra<User>("user")
+        if (user != null) {
+            this.user = user
+            initLoginBtnClickListener(user)
+        }
     }
 
     private fun initSignupBtnClickListener() {
         binding.btnSignupToSignup.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
 
-    private fun initLoginBtnClickListener() {
+    private fun initLoginBtnClickListener(user:User) {
         binding.btnLoginToSignin.setOnClickListener {
-            if (userId == binding.etLoginId.text.toString() && userPw == binding.etLoginPw.text.toString()) {
+            if (user.id == binding.etLoginId.text.toString() && user.password == binding.etLoginPw.text.toString()) {
                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-
                 val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("user", user)
                 startActivity(intent)
             } else {
                 Snackbar.make(
