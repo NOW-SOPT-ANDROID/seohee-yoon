@@ -16,12 +16,10 @@
     <string name="tv_signup_pw">비밀번호</string>
     <string name="et_signup_pw_hint">비밀번호를 입력해주세요</string>
     <string name="tv_signup_nickname">닉네임</string>
-    <string name="tv_signup_mbti">MBTI</string>
+    <string name="et_signup_nickname_hint">닉네임을 입력해주세요</string>
+    <string name="tv_signup_phone">전화번호</string>
+    <string name="et_signup_phone_hint">전화번호를 입력해주세요</string>
     <string name="btn_signup_to_signup">회원가입 하기</string>
-
-    <!-- 메인 페이지 -->
-    <string name="tv_main_id_title">ID</string>
-    <string name="tv_main_pw_title">PW</string>
 
     <!-- 메뉴 -->
     <string name="menu_home">Home</string>

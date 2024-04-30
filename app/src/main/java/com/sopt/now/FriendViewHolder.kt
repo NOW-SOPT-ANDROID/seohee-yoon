@@ -7,7 +7,7 @@ class FriendViewHolder(private val binding: ItemFriendBinding) : RecyclerView.Vi
     fun onBind(friendData: Friend) {
         binding.run {
             tvItemName.text = friendData.name
-            tvItemMbti.text = friendData.mbti
+            tvItemPhone.text = friendData.mbti
         }
     }
 }

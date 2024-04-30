@@ -33,7 +33,7 @@ class MyPageFragment(private val user: User) : Fragment() {
         binding.apply {
             tvMypageId.text = user.id
             tvMypagePw.text = user.password
-            tvMypageMbti.text = user.mbti
+            tvMypagePhone.text = user.phone
         }
     }
 

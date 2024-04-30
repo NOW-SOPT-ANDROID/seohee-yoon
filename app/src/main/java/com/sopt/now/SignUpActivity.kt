@@ -24,9 +24,9 @@ class SignUpActivity : AppCompatActivity() {
             val userID = binding.etSignupId.text.toString()
             val userPw = binding.etSignupPw.text.toString()
             val userNickname = binding.etSignupNickname.text.toString()
-            val userMbti = binding.etSignupMbti.text.toString()
+            val userPhone = binding.etSignupPhone.text.toString()
 
-            user = User(userID, userPw, userNickname, userMbti)
+            user = User(userID, userPw, userNickname, userPhone)
 
             checkInput(user)
         }
@@ -37,7 +37,7 @@ class SignUpActivity : AppCompatActivity() {
             user.id.length !in 6..10 -> showMessage(getString(R.string.msg_id_fail))
             user.password.length !in 8..12 -> showMessage(getString(R.string.msg_password_fail))
             user.name.isNullOrBlank() -> showMessage(getString(R.string.msg_nickname_fail))
-            user.mbti.isNullOrBlank() -> showMessage(getString(R.string.msg_mbti_fail))
+            user.phone.isNullOrBlank() -> showMessage(getString(R.string.msg_mbti_fail))
             else -> checkedSignup(user)
         }
     }

@@ -41,7 +41,7 @@ class HomeFragment(private val user: User) : Fragment() {
 
     private fun getUserData(): User? {
         binding.apply {
-            return User(user.id, user.password, user.name, user.mbti)
+            return User(user.id, user.password, user.name, user.phone)
         }
     }
 
