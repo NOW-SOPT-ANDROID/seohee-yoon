@@ -38,16 +38,13 @@ class LoginActivity : AppCompatActivity() {
     private fun initLoginBtnClickListener(user:User) {
         binding.btnLoginToSignin.setOnClickListener {
             if (user.id == binding.etLoginId.text.toString() && user.password == binding.etLoginPw.text.toString()) {
-                Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
+
+                Toast.makeText(this, R.string.msg_login_success, Toast.LENGTH_SHORT).show()
                 intent.putExtra("user", user)
                 startActivity(intent)
             } else {
-                Snackbar.make(
-                    binding.root,
-                    "아이디 또는 비밀번호가 일치하지 않습니다",
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                Snackbar.make(binding.root, R.string.msg_login_fail, Snackbar.LENGTH_SHORT).show()
             }
         }
     }

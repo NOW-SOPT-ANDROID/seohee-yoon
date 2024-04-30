@@ -17,14 +17,6 @@
     <string name="et_signup_pw_hint">비밀번호를 입력해주세요</string>
     <string name="tv_signup_nickname">닉네임</string>
     <string name="tv_signup_mbti">MBTI</string>
-    <string name="rb_signup_mbti_e">E</string>
-    <string name="rb_signup_mbti_i">I</string>
-    <string name="rb_signup_mbti_s">S</string>
-    <string name="rb_signup_mbti_n">N</string>
-    <string name="rb_signup_mbti_t">T</string>
-    <string name="rb_signup_mbti_f">F</string>
-    <string name="rb_signup_mbti_j">J</string>
-    <string name="rb_signup_mbti_p">P</string>
     <string name="btn_signup_to_signup">회원가입 하기</string>
 
     <!-- 메인 페이지 -->
@@ -38,4 +30,14 @@
 
     <!-- 마이페이지 -->
     <string name="btn_mypage_logout">로그아웃</string>
+
+    <!-- 메세지 -->
+    <string name="msg_id_fail">아이디는 6자 이상 10자 이하여야 합니다</string>
+    <string name="msg_password_fail">비밀번호는 8자 이상 12자 이하여야 합니다</string>
+    <string name="msg_nickname_fail">닉네임을 입력해주세요</string>
+    <string name="msg_mbti_fail">mbti를 입력해주세요</string>
+
+    <string name="msg_signup_success">회원가입이 완료되었습니다</string>
+    <string name="msg_login_success">로그인에 성공하였습니다</string>
+    <string name="msg_login_fail">아이디 또는 비밀번호가 일치하지 않습니다</string>
 </resources>
