@@ -1,6 +1,7 @@
 package com.sopt.now.compose
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -36,7 +37,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    val user = intent.getParcelableExtra<User>("user")
+                    if (user != null) {
+                        MainScreen(user)
+                    }
                 }
             }
         }
@@ -44,7 +48,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(user: User) {
     var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf(
         BottomNavigationItem(
@@ -82,7 +86,7 @@ fun MainScreen() {
         ) {
             when (selectedItem) {
                 0 -> {
-                    HomeScreen()
+                    HomeScreen(user)
                 }
 
                 1 -> {
@@ -90,7 +94,7 @@ fun MainScreen() {
                 }
 
                 2 -> {
-                    MyPageScreen()
+                    MyPageScreen(user)
                 }
             }
         }

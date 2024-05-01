@@ -1,12 +1,7 @@
 package com.sopt.now.compose
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Parcelable
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -59,17 +54,14 @@ class SignUpActivity : ComponentActivity() {
 @Composable
 fun SignUpScreen() {
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
     var userId by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
     var userNickname by remember { mutableStateOf("") }
-    var userMbti by remember { mutableStateOf("") }
+    var userPhone by remember { mutableStateOf("") }
 
-    val sharedPreferences:SharedPreferences = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
-    val edit = sharedPreferences.edit()
-
-    val snackbarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -87,26 +79,26 @@ fun SignUpScreen() {
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
-                text="ID",
+                text = "ID",
                 fontSize = 24.sp,
                 modifier = Modifier.padding(top = 30.dp)
             )
             TextField(
                 value = userId,
-                onValueChange = {userId = it},
+                onValueChange = { userId = it },
                 label = { Text("아이디를 입력해주세요") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 12.dp)
             )
             Text(
-                text="비밀번호",
+                text = "비밀번호",
                 fontSize = 24.sp,
                 modifier = Modifier.padding(top = 30.dp),
             )
             TextField(
                 value = userPassword,
-                onValueChange = {userPassword = it},
+                onValueChange = { userPassword = it },
                 label = { Text("비밀번호를 입력해주세요") },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
@@ -114,27 +106,27 @@ fun SignUpScreen() {
                     .padding(top = 12.dp)
             )
             Text(
-                text="닉네임",
+                text = "닉네임",
                 fontSize = 24.sp,
                 modifier = Modifier.padding(top = 30.dp)
             )
             TextField(
                 value = userNickname,
-                onValueChange = {userNickname = it},
+                onValueChange = { userNickname = it },
                 label = { Text("닉네임을 입력해주세요") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 12.dp)
             )
             Text(
-                text="MBTI",
+                text = "전화번호",
                 fontSize = 24.sp,
                 modifier = Modifier.padding(top = 30.dp)
             )
             TextField(
-                value = userMbti,
-                onValueChange = {userMbti = it},
-                label = { Text("MBTI를 입력해주세요") },
+                value = userPhone,
+                onValueChange = { userPhone = it },
+                label = { Text("전화번호를 입력해주세요") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 12.dp)
@@ -147,48 +139,50 @@ fun SignUpScreen() {
                         userId.length !in 6..10 -> {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
-                                "아이디는 6자 이상 10자 이하여야 합니다",
-                                duration = SnackbarDuration.Short)
+                                    "아이디는 6자 이상 10자 이하여야 합니다",
+                                    duration = SnackbarDuration.Short
+                                )
                             }
                         }
+
                         userPassword.length !in 8..12 -> {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
-                                "비밀번호는 8자 이상 16자 이하여야 합니다",
-                                duration = SnackbarDuration.Short)
+                                    "비밀번호는 8자 이상 16자 이하여야 합니다",
+                                    duration = SnackbarDuration.Short
+                                )
                             }
                         }
+
                         userNickname.isBlank() -> {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
-                                "닉네임을 입력해주세요",
-                                duration = SnackbarDuration.Short)
+                                    "닉네임을 입력해주세요",
+                                    duration = SnackbarDuration.Short
+                                )
                             }
                         }
+
                         else -> {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
-                                "회원가입 성공",
-                                duration = SnackbarDuration.Long)
+                                    "회원가입 성공",
+                                    duration = SnackbarDuration.Long
+                                )
                             }
 
-                            edit.apply {
-                                putString("userId", userId)
-                                putString("userPassword", userPassword)
-                                putString("userNickname", userNickname)
-                                putString("userMbti", userMbti)
-                            }
-
-                            edit.apply()
-
+                            val user = User(userId, userPassword, userNickname, userPhone)
                             val intent = Intent(context, LoginActivity::class.java)
+                            intent.putExtra("user", user)
+
                             context.startActivity(intent)
                         }
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp)) {
+                    .padding(top = 16.dp)
+            ) {
                 Text(text = "회원가입 하기")
             }
         }

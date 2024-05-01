@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -45,21 +44,16 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginScreen()
+                    val user = intent.getParcelableExtra<User>("user")
+                    LoginScreen(user ?: User("", "", "", ""))
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun LoginScreen() {
-    var userId by remember { mutableStateOf("") }
-    var userPassword by remember { mutableStateOf("") }
-    var userNickname by remember { mutableStateOf("") }
-    var userMbti by remember { mutableStateOf("") }
-
+fun LoginScreen(user:User) {
     var id by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
 
@@ -67,14 +61,6 @@ fun LoginScreen() {
     val coroutineScope = rememberCoroutineScope()
 
     val context = LocalContext.current
-    val sharedPreferences: SharedPreferences = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
-
-    sharedPreferences.apply {
-        userId = getString("userId", userId).toString()
-        userPassword = getString("userPassword", userPassword).toString()
-        userNickname = getString("userNickname", userNickname).toString()
-        userMbti = getString("userMbti", userMbti).toString()
-    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -125,11 +111,12 @@ fun LoginScreen() {
 
             Button(
                 onClick = {
-                    if (userId == id && userPassword == pw && userId.isNotEmpty() && userPassword.isNotEmpty()) {
+                    if (user.id == id && user.password == pw && user.id.isNotEmpty() && user.password.isNotEmpty()) {
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("로그인 성공")
                         }
                         val intent = Intent(context, MainActivity::class.java)
+                        intent.putExtra("user", user)
                         context.startActivity(intent)
                     } else {
                         coroutineScope.launch {
@@ -146,8 +133,7 @@ fun LoginScreen() {
 
             Button(
                 onClick = {
-                    val intent = Intent(context, SignUpActivity::class.java)
-                    context.startActivity(intent)
+                    context.startActivity(Intent(context, SignUpActivity::class.java))
                 },
                 modifier = Modifier
                     .fillMaxWidth()
