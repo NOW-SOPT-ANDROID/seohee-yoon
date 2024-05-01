@@ -66,17 +66,6 @@ class HomeFragment(private val user: User) : Fragment() {
         friendAdapter.setItemList(combinedList)
     }
 
-    private fun getJsonDataFromAsset(): String? {
-        return try {
-            requireActivity().assets.open("Friend.json")
-                .bufferedReader()
-                .use { it.readText() }
-        } catch (ioException: IOException) {
-            ioException.printStackTrace()
-            null
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
