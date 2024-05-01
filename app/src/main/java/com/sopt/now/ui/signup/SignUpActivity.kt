@@ -1,11 +1,14 @@
-package com.sopt.now
+package com.sopt.now.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.sopt.now.R
+import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivitySignUpBinding
+import com.sopt.now.ui.login.LoginActivity
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding

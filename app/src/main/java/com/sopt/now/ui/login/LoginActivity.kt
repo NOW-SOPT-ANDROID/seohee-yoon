@@ -1,4 +1,4 @@
-package com.sopt.now
+package com.sopt.now.ui.login
 
 
 import android.content.Intent
@@ -6,6 +6,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.sopt.now.ui.main.MainActivity
+import com.sopt.now.R
+import com.sopt.now.ui.signup.SignUpActivity
+import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -35,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun initLoginBtnClickListener(user:User) {
+    private fun initLoginBtnClickListener(user: User) {
         binding.btnLoginToSignin.setOnClickListener {
             if (user.id == binding.etLoginId.text.toString() && user.password == binding.etLoginPw.text.toString()) {
                 val intent = Intent(this, MainActivity::class.java)

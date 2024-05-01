@@ -1,10 +1,12 @@
-package com.sopt.now
+package com.sopt.now.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sopt.now.databinding.ItemFriendBinding
+import com.sopt.now.data.Friend
+import com.sopt.now.data.User
 import com.sopt.now.databinding.ItemUserBinding
+import com.sopt.now.databinding.ItemFriendBinding
 
 class MultiAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

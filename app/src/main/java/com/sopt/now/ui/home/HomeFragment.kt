@@ -1,4 +1,4 @@
-package com.sopt.now
+package com.sopt.now.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sopt.now.data.Friend
+import com.sopt.now.data.User
 import com.sopt.now.databinding.FragmentHomeBinding
 import java.io.IOException
 

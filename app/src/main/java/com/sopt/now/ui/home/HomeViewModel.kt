@@ -1,6 +1,8 @@
-package com.sopt.now
+package com.sopt.now.ui.home
 
 import androidx.lifecycle.ViewModel
+import com.sopt.now.R
+import com.sopt.now.data.Friend
 
 class HomeViewModel : ViewModel() {
     val mockFriendList = listOf(

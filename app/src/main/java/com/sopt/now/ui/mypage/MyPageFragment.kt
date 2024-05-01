@@ -1,4 +1,4 @@
-package com.sopt.now
+package com.sopt.now.ui.mypage
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.sopt.now.data.User
 import com.sopt.now.databinding.FragmentMyPageBinding
+import com.sopt.now.ui.login.LoginActivity
 
 
 class MyPageFragment(private val user: User) : Fragment() {
