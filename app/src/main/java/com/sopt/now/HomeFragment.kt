@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.sopt.now.databinding.FragmentHomeBinding
 import java.io.IOException
 
@@ -17,6 +16,7 @@ class HomeFragment(private val user: User) : Fragment() {
         get() = _binding ?: throw IllegalStateException("Binding is null")
 
     private lateinit var friendAdapter: MultiAdapter
+    private val viewModel by viewModels<HomeViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +39,7 @@ class HomeFragment(private val user: User) : Fragment() {
         loadFriendList()
     }
 
+
     private fun getUserData(): User? {
         binding.apply {
             return User(user.id, user.password, user.name, user.phone)
@@ -46,18 +47,15 @@ class HomeFragment(private val user: User) : Fragment() {
     }
 
     private fun loadFriendList() {
-        val jsonString = getJsonDataFromAsset()
         val user = getUserData()
-
-        val gson = Gson()
-        val friendType = object : TypeToken<List<Friend>>() {}.type
-
-        val friendList: List<Friend> = gson.fromJson(jsonString, friendType)
 
         val userList = mutableListOf<Any>()
         if (user != null) {
             userList.add(user)
         }
+
+        val friendList: MutableList<Friend> = mutableListOf()
+        friendList.addAll(viewModel.mockFriendList)
 
         val combinedList: MutableList<Any> = mutableListOf()
         combinedList.addAll(userList)
