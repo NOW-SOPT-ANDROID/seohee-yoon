@@ -1,4 +1,4 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,6 +19,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.now.compose.R
+import com.sopt.now.compose.data.Friend
+import com.sopt.now.compose.data.User
 
 @Composable
 fun HomeScreen(user: User) {
@@ -37,7 +40,8 @@ fun HomeScreen(user: User) {
                 Spacer(modifier = Modifier.width(10.dp))
                 Image(
                     painter = painterResource(
-                        id = R.drawable.img_mypage_profile),
+                        id = R.drawable.img_mypage_profile
+                    ),
                     contentDescription = "user_profile"
                 )
 

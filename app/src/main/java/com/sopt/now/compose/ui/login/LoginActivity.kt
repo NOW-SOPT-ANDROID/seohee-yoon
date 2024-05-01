@@ -1,8 +1,6 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.ui.login
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -29,9 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.now.compose.ui.main.MainActivity
+import com.sopt.now.compose.data.User
+import com.sopt.now.compose.ui.signup.SignUpActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
 
@@ -53,7 +53,7 @@ class LoginActivity : ComponentActivity() {
 }
 
 @Composable
-fun LoginScreen(user:User) {
+fun LoginScreen(user: User) {
     var id by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
 

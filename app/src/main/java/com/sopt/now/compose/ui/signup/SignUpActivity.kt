@@ -1,4 +1,4 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
@@ -31,6 +31,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.now.compose.ui.login.LoginActivity
+import com.sopt.now.compose.data.User
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
 

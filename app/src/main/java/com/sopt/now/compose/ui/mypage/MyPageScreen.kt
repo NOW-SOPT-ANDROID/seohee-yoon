@@ -1,4 +1,4 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.ui.mypage
 
 import android.content.Context
 import android.content.Intent
@@ -18,6 +18,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.now.compose.R
+import com.sopt.now.compose.data.User
+import com.sopt.now.compose.ui.login.LoginActivity
 
 @Composable
 fun MyPageScreen(user: User) {
