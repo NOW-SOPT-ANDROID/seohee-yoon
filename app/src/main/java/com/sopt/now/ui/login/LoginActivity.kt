@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
+import com.sopt.now.data.Key.USER_PROFILE
 import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.ui.main.MainActivity
@@ -26,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun getUserData() {
-        val user = intent.getParcelableExtra<User>("user")
+        val user = intent.getParcelableExtra<User>(USER_PROFILE)
         if (user != null) {
             this.user = user
             initLoginBtnClickListener()
@@ -50,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
 
             Toast.makeText(this, R.string.msg_login_success, Toast.LENGTH_SHORT).show()
-            intent.putExtra("user", user)
+            intent.putExtra(USER_PROFILE, user)
             startActivity(intent)
         } else {
             Snackbar.make(binding.root, R.string.msg_login_fail, Snackbar.LENGTH_SHORT).show()

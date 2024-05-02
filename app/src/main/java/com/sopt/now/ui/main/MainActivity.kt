@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.sopt.now.R
+import com.sopt.now.data.Key.USER_PROFILE
 import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivityMainBinding
 import com.sopt.now.ui.home.HomeFragment
@@ -19,8 +20,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        user = intent.getParcelableExtra<User>("user")
-        if (user == null){
+        user = intent.getParcelableExtra<User>(USER_PROFILE)
+        if (user == null) {
             finish()
             return
         }
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun clickBottomNavigation() {
         binding.bnvMain.setOnItemSelectedListener { menuItem ->
-            val fragment = when(menuItem.itemId) {
+            val fragment = when (menuItem.itemId) {
                 R.id.menu_home -> user?.let { HomeFragment(it) }
                 R.id.menu_search -> SearchFragment()
                 R.id.menu_mypage -> user?.let { MyPageFragment(it) }

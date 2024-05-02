@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
+import com.sopt.now.data.Key.USER_PROFILE
 import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.ui.login.LoginActivity
@@ -47,14 +48,13 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun checkedSignup(user: User) {
         val intent = Intent(this, LoginActivity::class.java)
-        intent.putExtra("user", user)
+        intent.putExtra(USER_PROFILE, user)
 
         Toast.makeText(this, R.string.msg_signup_success, Toast.LENGTH_SHORT).show()
         startActivity(intent)
     }
 
-    private fun showMessage(message: String)
-    {
+    private fun showMessage(message: String) {
         Snackbar.make(
             binding.root,
             message,
