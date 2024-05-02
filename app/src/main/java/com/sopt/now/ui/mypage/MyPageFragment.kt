@@ -33,6 +33,7 @@ class MyPageFragment(private val user: User) : Fragment() {
 
     private fun initViews() {
         binding.apply {
+            tvMypageNickname.text = user.name
             tvMypageId.text = user.id
             tvMypagePw.text = user.password
             tvMypagePhone.text = user.phone
