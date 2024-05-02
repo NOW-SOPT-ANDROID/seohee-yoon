@@ -15,8 +15,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,11 +29,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.now.compose.ui.main.MainActivity
 import com.sopt.now.compose.data.User
+import com.sopt.now.compose.ui.main.MainActivity
 import com.sopt.now.compose.ui.signup.SignUpActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,7 +112,7 @@ fun LoginScreen(user: User) {
 
             Button(
                 onClick = {
-                    if (user.id == id && user.password == pw && user.id.isNotEmpty() && user.password.isNotEmpty()) {
+                    if (user.id == id && user.password == pw && user.id.isNotBlank() && user.password.isNotBlank()) {
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("로그인 성공")
                         }
