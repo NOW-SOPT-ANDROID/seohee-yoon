@@ -1,7 +1,5 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.ui.signup
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -33,6 +31,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.now.compose.ui.login.LoginActivity
+import com.sopt.now.compose.data.User
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
 
@@ -45,7 +45,7 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SignUp()
+                    SignUpScreen()
                 }
             }
         }
@@ -54,15 +54,16 @@ class SignUpActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun SignUp() {
-    var userId by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var nickname by remember { mutableStateOf("") }
-    var mbti by remember { mutableStateOf("") }
-
+fun SignUpScreen() {
+    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
+
+    var userId by remember { mutableStateOf("") }
+    var userPassword by remember { mutableStateOf("") }
+    var userNickname by remember { mutableStateOf("") }
+    var userPhone by remember { mutableStateOf("") }
+
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -80,26 +81,26 @@ fun SignUp() {
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
-                text="ID",
+                text = "ID",
                 fontSize = 24.sp,
                 modifier = Modifier.padding(top = 30.dp)
             )
             TextField(
                 value = userId,
-                onValueChange = {userId = it},
+                onValueChange = { userId = it },
                 label = { Text("아이디를 입력해주세요") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 12.dp)
             )
             Text(
-                text="비밀번호",
+                text = "비밀번호",
                 fontSize = 24.sp,
                 modifier = Modifier.padding(top = 30.dp),
             )
             TextField(
-                value = password,
-                onValueChange = {password = it},
+                value = userPassword,
+                onValueChange = { userPassword = it },
                 label = { Text("비밀번호를 입력해주세요") },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
@@ -107,27 +108,27 @@ fun SignUp() {
                     .padding(top = 12.dp)
             )
             Text(
-                text="닉네임",
+                text = "닉네임",
                 fontSize = 24.sp,
                 modifier = Modifier.padding(top = 30.dp)
             )
             TextField(
-                value = nickname,
-                onValueChange = {nickname = it},
+                value = userNickname,
+                onValueChange = { userNickname = it },
                 label = { Text("닉네임을 입력해주세요") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 12.dp)
             )
             Text(
-                text="MBTI",
+                text = "전화번호",
                 fontSize = 24.sp,
                 modifier = Modifier.padding(top = 30.dp)
             )
             TextField(
-                value = mbti,
-                onValueChange = {mbti = it},
-                label = { Text("MBTI를 입력해주세요") },
+                value = userPhone,
+                onValueChange = { userPhone = it },
+                label = { Text("전화번호를 입력해주세요") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 12.dp)
@@ -140,46 +141,50 @@ fun SignUp() {
                         userId.length !in 6..10 -> {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
-                                "아이디는 6자 이상 10자 이하여야 합니다",
-                                duration = SnackbarDuration.Short)
+                                    "아이디는 6자 이상 10자 이하여야 합니다",
+                                    duration = SnackbarDuration.Short
+                                )
                             }
                         }
-                        password.length !in 8..12 -> {
+
+                        userPassword.length !in 8..12 -> {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
-                                "비밀번호는 8자 이상 16자 이하여야 합니다",
-                                duration = SnackbarDuration.Short)
+                                    "비밀번호는 8자 이상 16자 이하여야 합니다",
+                                    duration = SnackbarDuration.Short
+                                )
                             }
                         }
-                        nickname.isBlank() -> {
+
+                        userNickname.isBlank() -> {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
-                                "닉네임을 입력해주세요",
-                                duration = SnackbarDuration.Short)
+                                    "닉네임을 입력해주세요",
+                                    duration = SnackbarDuration.Short
+                                )
                             }
                         }
+
                         else -> {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
-                                "회원가입 성공",
-                                duration = SnackbarDuration.Long)
+                                    "회원가입 성공",
+                                    duration = SnackbarDuration.Long
+                                )
                             }
 
-                            val intent = Intent(context, LoginActivity::class.java).apply {
-                                putExtra("userId", userId)
-                                putExtra("password", password)
-                                putExtra("nickname", nickname)
-                                putExtra("mbti", mbti)
-                            }
+                            val user = User(userId, userPassword, userNickname, userPhone)
+                            val intent = Intent(context, LoginActivity::class.java)
+                            intent.putExtra("user", user)
 
-                            (context as? Activity)?.setResult(RESULT_OK, intent)
-                            (context as? Activity)?.finish()
+                            context.startActivity(intent)
                         }
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp)) {
+                    .padding(top = 16.dp)
+            ) {
                 Text(text = "회원가입 하기")
             }
         }

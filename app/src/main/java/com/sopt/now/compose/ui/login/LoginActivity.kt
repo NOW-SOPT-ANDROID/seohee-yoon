@@ -1,13 +1,9 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.ui.login
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,8 +15,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,11 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.now.compose.data.User
+import com.sopt.now.compose.ui.main.MainActivity
+import com.sopt.now.compose.ui.signup.SignUpActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,21 +45,16 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginScreen()
+                    val user = intent.getParcelableExtra<User>("user")
+                    LoginScreen(user ?: User("", "", "", ""))
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun LoginScreen() {
-    var userId by remember { mutableStateOf("") }
-    var userPw by remember { mutableStateOf("") }
-    var nickname by remember { mutableStateOf("") }
-    var mbti by remember { mutableStateOf("") }
-
+fun LoginScreen(user: User) {
     var id by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
 
@@ -68,18 +62,6 @@ fun LoginScreen() {
     val coroutineScope = rememberCoroutineScope()
 
     val context = LocalContext.current
-
-    val launcher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val data = result.data
-
-                userId = data?.getStringExtra("userId").toString()
-                userPw = data?.getStringExtra("password").toString()
-                nickname = data?.getStringExtra("nickname").toString()
-                mbti = data?.getStringExtra("mbti").toString()
-            }
-        }
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -130,20 +112,12 @@ fun LoginScreen() {
 
             Button(
                 onClick = {
-                    if (userId == id && userPw == pw && userId != "" && userPw != "") {
+                    if (user.id == id && user.password == pw && user.id.isNotBlank() && user.password.isNotBlank()) {
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("로그인 성공")
                         }
                         val intent = Intent(context, MainActivity::class.java)
-
-                        intent.putExtra("userId", userId)
-                        intent.putExtra("password", userPw)
-                        intent.putExtra("nickname", nickname)
-                        intent.putExtra("mbti", mbti)
-
-                        (context as? Activity)?.setResult(RESULT_OK, intent)
-                        (context as? Activity)?.finish()
-
+                        intent.putExtra("user", user)
                         context.startActivity(intent)
                     } else {
                         coroutineScope.launch {
@@ -160,7 +134,7 @@ fun LoginScreen() {
 
             Button(
                 onClick = {
-                    launcher.launch(Intent(context, SignUpActivity::class.java))
+                    context.startActivity(Intent(context, SignUpActivity::class.java))
                 },
                 modifier = Modifier
                     .fillMaxWidth()
