@@ -16,7 +16,7 @@ class HomeFragment(private val user: User) : Fragment() {
     private val binding: FragmentHomeBinding
         get() = _binding ?: throw IllegalStateException("Binding is null")
 
-    private lateinit var friendAdapter: MultiAdapter
+    private lateinit var multiAdapter: MultiAdapter
     private val viewModel by viewModels<HomeViewModel>()
 
     override fun onCreateView(
@@ -31,38 +31,29 @@ class HomeFragment(private val user: User) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        friendAdapter = MultiAdapter()
+        multiAdapter = MultiAdapter()
         binding.rvHomeFriends.apply {
-            adapter = friendAdapter
+            adapter = multiAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        loadFriendList()
+        combineList()
     }
 
-
-    private fun getUserData(): User? {
-        binding.apply {
-            return User(user.id, user.password, user.name, user.phone)
-        }
-    }
-
-    private fun loadFriendList() {
-        val user = getUserData()
-
-        val userList = mutableListOf<Any>()
-        if (user != null) {
-            userList.add(user)
-        }
-
+    private fun loadFriendList(): MutableList<Friend> {
         val friendList: MutableList<Friend> = mutableListOf()
         friendList.addAll(viewModel.mockFriendList)
 
-        val combinedList: MutableList<Any> = mutableListOf()
-        combinedList.addAll(userList)
-        combinedList.addAll(friendList)
+        return friendList
+    }
 
-        friendAdapter.setItemList(combinedList)
+    private fun combineList() {
+        val combinedList = mutableListOf<Any>().apply {
+            add(user.copy())
+            addAll(loadFriendList())
+        }
+
+        multiAdapter.setItemList(combinedList)
     }
 
     override fun onDestroyView() {
