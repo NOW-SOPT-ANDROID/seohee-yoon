@@ -5,7 +5,7 @@
     android:id="@+id/layout_signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    tools:context=".ui.signup.SignUpActivity">
 
     <TextView
         android:id="@+id/tv_signup_title"
@@ -22,10 +22,10 @@
         android:id="@+id/tv_signup_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tv_signup_id"
-        android:textSize="24sp"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="30dp"
+        android:text="@string/tv_signup_id"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_signup_title" />
 
@@ -37,18 +37,18 @@
         android:layout_marginTop="4dp"
         android:hint="@string/et_signup_id_hint"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_signup_id" />
 
     <TextView
         android:id="@+id/tv_signup_pw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tv_signup_pw"
-        android:textSize="24sp"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="30dp"
+        android:text="@string/tv_signup_pw"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_signup_id" />
 
@@ -56,23 +56,23 @@
         android:id="@+id/et_signup_pw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:hint="@string/et_signup_pw_hint"
-        android:inputType="textPassword"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:hint="@string/et_signup_pw_hint"
+        android:inputType="textPassword"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_signup_pw" />
 
     <TextView
         android:id="@+id/tv_signup_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tv_signup_nickname"
-        android:textSize="24sp"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="30dp"
+        android:text="@string/tv_signup_nickname"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_signup_pw" />
 
@@ -80,133 +80,43 @@
         android:id="@+id/et_signup_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:hint="닉네임을 입력해주세요"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:hint="@string/et_signup_nickname_hint"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_signup_nickname" />
 
     <TextView
-        android:id="@+id/tv_signup_mbti"
+        android:id="@+id/tv_signup_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tv_signup_mbti"
-        android:textSize="24sp"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="30dp"
+        android:text="@string/tv_signup_phone"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_signup_nickname" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_signup_mbti"
+    <EditText
+        android:id="@+id/et_signup_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_signup_mbti"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="4dp"
+        android:hint="@string/et_signup_phone_hint"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        >
-        <RadioGroup
-            android:id="@+id/rg_signup_ei"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/layout_signup_mbti"
-            app:layout_constraintTop_toTopOf="@+id/layout_signup_mbti">
-
-            <RadioButton
-                android:id="@+id/rb_signup_e"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:text="@string/rb_signup_mbti_e" />
-
-            <RadioButton
-                android:id="@+id/rb_signup_i"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rb_signup_mbti_i" />
-
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/rg_signup_sn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@id/layout_signup_mbti"
-            app:layout_constraintTop_toTopOf="@+id/layout_signup_mbti">
-
-            <RadioButton
-                android:id="@+id/rb_signup_s"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rb_signup_mbti_s" />
-
-            <RadioButton
-                android:id="@+id/rb_signup_n"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:text="@string/rb_signup_mbti_n" />
-
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/rg_signup_tf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/layout_signup_mbti"
-            app:layout_constraintTop_toBottomOf="@+id/rg_signup_ei">
-
-            <RadioButton
-                android:id="@+id/rb_signup_t"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:text="@string/rb_signup_mbti_t" />
-
-            <RadioButton
-                android:id="@+id/rb_signup_f"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rb_signup_mbti_f" />
-
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/rg_signup_jp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@id/layout_signup_mbti"
-            app:layout_constraintTop_toBottomOf="@+id/rg_signup_sn">
-
-            <RadioButton
-                android:id="@+id/rb_signup_j"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rb_signup_mbti_j" />
-
-            <RadioButton
-                android:id="@+id/rb_signup_p"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:text="@string/rb_signup_mbti_p" />
-
-        </RadioGroup>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_signup_phone" />
 
     <Button
         android:id="@+id/btn_signup_to_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btn_signup_to_signup"
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="36dp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:text="@string/btn_signup_to_signup"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
