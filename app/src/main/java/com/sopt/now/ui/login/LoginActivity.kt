@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
         val user = intent.getParcelableExtra<User>("user")
         if (user != null) {
             this.user = user
-            initLoginBtnClickListener(user)
+            initLoginBtnClickListener()
         }
     }
 
@@ -39,17 +39,21 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun initLoginBtnClickListener(user: User) {
+    private fun initLoginBtnClickListener() {
         binding.btnLoginToSignin.setOnClickListener {
-            if (user.id == binding.etLoginId.text.toString() && user.password == binding.etLoginPw.text.toString()) {
-                val intent = Intent(this, MainActivity::class.java)
+            checkLogin(user)
+        }
+    }
 
-                Toast.makeText(this, R.string.msg_login_success, Toast.LENGTH_SHORT).show()
-                intent.putExtra("user", user)
-                startActivity(intent)
-            } else {
-                Snackbar.make(binding.root, R.string.msg_login_fail, Snackbar.LENGTH_SHORT).show()
-            }
+    private fun checkLogin(user: User) {
+        if (user.id == binding.etLoginId.text.toString() && user.password == binding.etLoginPw.text.toString()) {
+            val intent = Intent(this, MainActivity::class.java)
+
+            Toast.makeText(this, R.string.msg_login_success, Toast.LENGTH_SHORT).show()
+            intent.putExtra("user", user)
+            startActivity(intent)
+        } else {
+            Snackbar.make(binding.root, R.string.msg_login_fail, Snackbar.LENGTH_SHORT).show()
         }
     }
 }

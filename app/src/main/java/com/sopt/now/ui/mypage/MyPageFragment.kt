@@ -46,9 +46,7 @@ class MyPageFragment(private val user: User) : Fragment() {
     }
 
     private fun navigateToLogin() {
-        val intent = Intent(requireContext(), LoginActivity::class.java)
-
-        startActivity(intent)
+        startActivity(Intent(requireContext(), LoginActivity::class.java))
     }
 
     override fun onDestroyView() {

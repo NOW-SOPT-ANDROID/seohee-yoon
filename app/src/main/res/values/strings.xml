@@ -33,7 +33,7 @@
     <string name="msg_id_fail">아이디는 6자 이상 10자 이하여야 합니다</string>
     <string name="msg_password_fail">비밀번호는 8자 이상 12자 이하여야 합니다</string>
     <string name="msg_nickname_fail">닉네임을 입력해주세요</string>
-    <string name="msg_mbti_fail">mbti를 입력해주세요</string>
+    <string name="msg_phone_fail">전화번호를 입력해주세요</string>
 
     <string name="msg_signup_success">회원가입이 완료되었습니다</string>
     <string name="msg_login_success">로그인에 성공하였습니다</string>

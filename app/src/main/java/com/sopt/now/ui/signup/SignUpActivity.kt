@@ -40,7 +40,7 @@ class SignUpActivity : AppCompatActivity() {
             user.id.length !in 6..10 -> showMessage(getString(R.string.msg_id_fail))
             user.password.length !in 8..12 -> showMessage(getString(R.string.msg_password_fail))
             user.name.isNullOrBlank() -> showMessage(getString(R.string.msg_nickname_fail))
-            user.phone.isNullOrBlank() -> showMessage(getString(R.string.msg_mbti_fail))
+            user.phone.isNullOrBlank() -> showMessage(getString(R.string.msg_phone_fail))
             else -> checkedSignup(user)
         }
     }
