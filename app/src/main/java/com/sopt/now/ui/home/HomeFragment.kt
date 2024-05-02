@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sopt.now.data.Friend
 import com.sopt.now.data.User
 import com.sopt.now.databinding.FragmentHomeBinding
-import java.io.IOException
 
 class HomeFragment(private val user: User) : Fragment() {
     private var _binding: FragmentHomeBinding? = null

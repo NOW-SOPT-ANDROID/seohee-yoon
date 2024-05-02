@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import com.sopt.now.ui.main.MainActivity
 import com.sopt.now.R
-import com.sopt.now.ui.signup.SignUpActivity
 import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivityLoginBinding
+import com.sopt.now.ui.main.MainActivity
+import com.sopt.now.ui.signup.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -21,11 +21,11 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getResultSignup()
+        getUserData()
         initSignupBtnClickListener()
     }
 
-    private fun getResultSignup() {
+    private fun getUserData() {
         val user = intent.getParcelableExtra<User>("user")
         if (user != null) {
             this.user = user

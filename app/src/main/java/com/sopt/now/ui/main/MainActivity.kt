@@ -12,45 +12,45 @@ import com.sopt.now.ui.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var user: User
+    private var user: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        user = intent.getParcelableExtra<User>("user")!!
+        user = intent.getParcelableExtra<User>("user")
+        if (user == null){
+            finish()
+            return
+        }
 
         val currentFragment = supportFragmentManager.findFragmentById(binding.fcvMain.id)
         if (currentFragment == null) {
-            supportFragmentManager.beginTransaction()
-                .add(binding.fcvMain.id, HomeFragment(user))
-                .commit()
+            user?.let {
+                supportFragmentManager.beginTransaction()
+                    .add(binding.fcvMain.id, HomeFragment(it))
+                    .commit()
+            }
         }
 
         clickBottomNavigation()
     }
 
+
     private fun clickBottomNavigation() {
-        binding.bnvMain.setOnItemSelectedListener {
-            when(it.itemId) {
-                R.id.menu_home -> {
-                    replaceFragment(HomeFragment(user))
-                    true
-                }
-
-                R.id.menu_search -> {
-                    replaceFragment(SearchFragment())
-                    true
-                }
-
-                R.id.menu_mypage -> {
-                    replaceFragment(MyPageFragment(user))
-                    true
-                }
-
-                else -> false
+        binding.bnvMain.setOnItemSelectedListener { menuItem ->
+            val fragment = when(menuItem.itemId) {
+                R.id.menu_home -> user?.let { HomeFragment(it) }
+                R.id.menu_search -> SearchFragment()
+                R.id.menu_mypage -> user?.let { MyPageFragment(it) }
+                else -> null
             }
+
+            fragment?.let {
+                replaceFragment(it)
+                true
+            } ?: false
         }
     }
 
