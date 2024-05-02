@@ -2,56 +2,74 @@ package com.sopt.now.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
 import com.sopt.now.data.Key.USER_PROFILE
+import com.sopt.now.data.ServicePool.authService
 import com.sopt.now.data.User
+import com.sopt.now.data.dto.request.RequestSignUpDto
+import com.sopt.now.data.dto.response.ResponseSignUpDto
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.ui.login.LoginActivity
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
-    private lateinit var user: User
+    private lateinit var id: String
+    private lateinit var password: String
+    private lateinit var nickname: String
+    private lateinit var phone: String
+
+    private val viewModel by viewModels<SignUpViewModel>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initSignupBtnClickListener()
+        initView()
+        initObserver()
     }
 
-    private fun initSignupBtnClickListener() {
+    private fun initView() {
         binding.btnSignupToSignup.setOnClickListener {
-            val userID = binding.etSignupId.text.toString()
-            val userPw = binding.etSignupPw.text.toString()
-            val userNickname = binding.etSignupNickname.text.toString()
-            val userPhone = binding.etSignupPhone.text.toString()
-
-            user = User(userID, userPw, userNickname, userPhone)
-
-            checkInput(user)
+            viewModel.signUp(getSignUpRequestDto())
         }
     }
 
-    private fun checkInput(user: User) {
-        return when {
-            user.id.length !in 6..10 -> showMessage(getString(R.string.msg_id_fail))
-            user.password.length !in 8..12 -> showMessage(getString(R.string.msg_password_fail))
-            user.name.isNullOrBlank() -> showMessage(getString(R.string.msg_nickname_fail))
-            user.phone.isNullOrBlank() -> showMessage(getString(R.string.msg_phone_fail))
-            else -> checkedSignup(user)
+    private fun initObserver() {
+        viewModel.liveData.observe(this) { state ->
+            Toast.makeText(
+                this@SignUpActivity,
+                state.message,
+                Toast.LENGTH_SHORT,
+            ).show()
+
+            if (state.isSuccess)
+                goToLogin()
         }
     }
 
-    private fun checkedSignup(user: User) {
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.putExtra(USER_PROFILE, user)
+    private fun getSignUpRequestDto(): RequestSignUpDto {
+        id = binding.etSignupId.text.toString()
+        password = binding.etSignupPw.text.toString()
+        nickname = binding.etSignupNickname.text.toString()
+        phone = binding.etSignupPhone.text.toString()
 
-        Toast.makeText(this, R.string.msg_signup_success, Toast.LENGTH_SHORT).show()
-        startActivity(intent)
+        return RequestSignUpDto(
+            authenticationId = id,
+            password = password,
+            nickname = nickname,
+            phone = phone
+        )
+    }
+
+    private fun goToLogin() {
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 
     private fun showMessage(message: String) {
