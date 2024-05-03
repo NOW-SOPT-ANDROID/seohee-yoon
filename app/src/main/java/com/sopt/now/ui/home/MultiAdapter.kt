@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sopt.now.data.Friend
-import com.sopt.now.data.User
+import com.sopt.now.data.dto.response.ResponseUserDto
 import com.sopt.now.databinding.ItemUserBinding
 import com.sopt.now.databinding.ItemFriendBinding
 
-class MultiAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var itemList: List<Any> = emptyList()
+class MultiAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var friendList: List<Friend> = emptyList()
+    private var user = ResponseUserDto.UserData("", "", "")
 
     companion object {
         const val VIEW_TYPE_USER = 0
@@ -34,23 +35,27 @@ class MultiAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is UserViewHolder -> holder.onBind(itemList[position] as User)
-            is FriendViewHolder -> holder.onBind(itemList[position] as Friend)
+            is UserViewHolder -> holder.onBind(user)
+            is FriendViewHolder -> holder.onBind(friendList[position])
         }
     }
 
-    override fun getItemCount() = itemList.size
+    override fun getItemCount() = friendList.size
 
     override fun getItemViewType(position: Int): Int {
-        return when (itemList[position]) {
-            is User -> VIEW_TYPE_USER
-            is Friend -> VIEW_TYPE_FRIEND
-            else -> throw IllegalArgumentException("Invalid item type")
-        }
+        return if(position == 0)
+            VIEW_TYPE_USER
+        else
+            VIEW_TYPE_FRIEND
     }
 
-    fun setItemList(itemList: List<Any>) {
-        this.itemList = itemList.toList()
+    fun setFriendList(friendList: List<Friend>) {
+        this.friendList = friendList.toList()
+        notifyDataSetChanged()
+    }
+
+    fun setUser(userData: ResponseUserDto?) {
+        user = userData?.data!!
         notifyDataSetChanged()
     }
 }

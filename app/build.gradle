@@ -22,6 +22,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "AUTH_BASE_URL", properties["base.url"]
+        buildConfigField "String", "FRIEND_BASE_URL", properties["friend.url"]
     }
 
     buildTypes {
@@ -70,4 +71,8 @@ dependencies {
     // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
+
+    // url -> 이미지 변환
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 }

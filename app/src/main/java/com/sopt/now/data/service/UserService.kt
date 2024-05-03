@@ -8,6 +8,6 @@ import retrofit2.http.Header
 interface UserService {
     @GET("member/info")
     fun getUser(
-        @Header("memberId") userId: Int
+        @Header("memberId") userId: String?
     ): Call<ResponseUserDto>
 }
