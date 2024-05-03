@@ -1,5 +1,6 @@
 package com.sopt.now.ui.signup
 
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +13,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.content.Context
 
 class SignUpViewModel : ViewModel() {
     private val authService by lazy { ServicePool.authService }
@@ -35,7 +37,9 @@ class SignUpViewModel : ViewModel() {
             ) {
                 if (response.isSuccessful) {
                     val data: ResponseSignUpDto? = response.body()
+
                     val userId = response.headers()["location"]
+
                     liveData.value = SignUpState(
                         isSuccess = true,
                         message = "회원가입 성공! 유저의 ID는 $userId 입니다"

@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.R
+import com.sopt.now.data.Key.USER_ID
 import com.sopt.now.data.Key.USER_PROFILE
 import com.sopt.now.data.ServicePool.authService
 import com.sopt.now.data.User
