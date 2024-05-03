@@ -26,7 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sopt.now.compose.BottomNavigationItem
-import com.sopt.now.compose.data.User
+import com.sopt.now.compose.data.Key.USER_ID
 import com.sopt.now.compose.ui.home.HomeScreen
 import com.sopt.now.compose.ui.mypage.MyPageScreen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
@@ -40,9 +40,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val user = intent.getParcelableExtra<User>("user")
-                    if (user != null) {
-                        MainScreen(user)
+                    val userId = intent.getStringExtra(USER_ID)
+                    if (userId != null) {
+                        MainScreen(userId)
                     }
                 }
             }
@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(user: User) {
+fun MainScreen(userId: String) {
     var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf(
         BottomNavigationItem(
@@ -89,7 +89,7 @@ fun MainScreen(user: User) {
         ) {
             when (selectedItem) {
                 0 -> {
-                    HomeScreen(user)
+                    HomeScreen(userId)
                 }
 
                 1 -> {
@@ -97,7 +97,7 @@ fun MainScreen(user: User) {
                 }
 
                 2 -> {
-                    MyPageScreen(user)
+                    MyPageScreen(userId)
                 }
             }
         }
