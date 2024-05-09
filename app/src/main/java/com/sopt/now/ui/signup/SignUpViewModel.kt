@@ -1,35 +1,21 @@
 package com.sopt.now.ui.signup
 
-import android.content.Intent
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sopt.now.data.ServicePool
-import com.sopt.now.data.User
 import com.sopt.now.data.dto.request.RequestSignUpDto
 import com.sopt.now.data.dto.response.ResponseSignUpDto
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.content.Context
 
 class SignUpViewModel : ViewModel() {
     private val authService by lazy { ServicePool.authService }
 
     val liveData = MutableLiveData<SignUpState>()
 
-    private var user: User? = null
-
     fun signUp(request: RequestSignUpDto) {
-        user = User(
-            id = request.authenticationId,
-            password = request.password,
-            name = request.nickname,
-            phone = request.phone
-        )
-
         authService.signUp(request).enqueue(object : Callback<ResponseSignUpDto> {
             override fun onResponse(
                 call: Call<ResponseSignUpDto>,
