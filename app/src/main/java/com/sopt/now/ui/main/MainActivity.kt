@@ -3,10 +3,7 @@ package com.sopt.now.ui.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import com.sopt.now.R
-import com.sopt.now.data.Key.USER_PROFILE
-import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivityMainBinding
 import com.sopt.now.ui.home.HomeFragment
 import com.sopt.now.ui.mypage.MyPageFragment

@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.sopt.now.data.Key.USER_ID
+import com.sopt.now.data.KeyStorage.USER_ID
 import com.sopt.now.databinding.FragmentMyPageBinding
 import com.sopt.now.ui.login.LoginActivity
 
