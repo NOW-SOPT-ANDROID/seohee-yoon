@@ -1,4 +1,4 @@
-package com.sopt.now.ui.login
+package com.sopt.now.presentation.login
 
 data class LoginState(
     val isSuccess: Boolean,

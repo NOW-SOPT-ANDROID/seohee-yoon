@@ -1,4 +1,4 @@
-package com.sopt.now.ui.home
+package com.sopt.now.presentation.home
 
 import androidx.recyclerview.widget.RecyclerView
 import com.sopt.now.data.model.response.ResponseUserDto

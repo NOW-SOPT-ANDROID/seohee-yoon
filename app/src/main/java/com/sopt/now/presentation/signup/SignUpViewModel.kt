@@ -1,4 +1,4 @@
-package com.sopt.now.ui.signup
+package com.sopt.now.presentation.signup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,13 +23,13 @@ class SignUpViewModel : ViewModel() {
             ) {
                 if (response.isSuccessful) {
                     val data: ResponseSignUpDto? = response.body()
-
                     val userId = response.headers()["location"]
 
                     liveData.value = SignUpState(
                         isSuccess = true,
                         message = "회원가입 성공! 유저의 ID는 $userId 입니다"
                     )
+
                 } else {
                     val errorBody = response.errorBody()?.string() ?: "No error message"
                     val errorMessage = JSONObject(errorBody).getString("message")

@@ -1,4 +1,4 @@
-package com.sopt.now.ui.signup
+package com.sopt.now.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,13 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.sopt.now.data.model.request.RequestSignUpDto
 import com.sopt.now.databinding.ActivitySignUpBinding
-import com.sopt.now.ui.login.LoginActivity
+import com.sopt.now.presentation.login.LoginActivity
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
 
     private val viewModel by viewModels<SignUpViewModel>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
