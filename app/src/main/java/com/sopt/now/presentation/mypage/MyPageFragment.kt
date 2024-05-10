@@ -1,4 +1,4 @@
-package com.sopt.now.ui.mypage
+package com.sopt.now.presentation.mypage
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.viewModels
-import com.sopt.now.data.KeyStorage.USER_ID
 import com.sopt.now.databinding.FragmentMyPageBinding
-import com.sopt.now.ui.login.LoginActivity
+import com.sopt.now.presentation.login.LoginActivity
+import com.sopt.now.util.KeyStorage.USER_PREF
+import com.sopt.now.util.MainApplication
 
 
 class MyPageFragment() : Fragment() {
@@ -37,24 +40,18 @@ class MyPageFragment() : Fragment() {
     }
 
     private fun initViews() {
-        val userId = activity?.intent?.getStringExtra(USER_ID)
+        viewModel.getUserData(MainApplication.prefsManager.getString(USER_PREF, ""))
 
-        if (userId != null) {
-            viewModel.getUserData(userId)
-
-            binding.apply {
-                viewModel.userData.observe(viewLifecycleOwner) { userData ->
-                    if (userData != null) {
-                        tvMypageId.text = userData.authenticationId
-                        tvMypageNickname.text = userData.nickname
-                        tvMypagePhone.text = userData.phone
-                    } else {
-                        Log.d("MyPageFragment", "User data is null.")
-                    }
+        binding.apply {
+            viewModel.userData.observe(viewLifecycleOwner) { userData ->
+                if (userData != null) {
+                    tvMypageId.text = userData.authenticationId
+                    tvMypageNickname.text = userData.nickname
+                    tvMypagePhone.text = userData.phone
+                } else {
+                    Log.d("MyPageFragment", "User data is null.")
                 }
             }
-        } else {
-            Log.d("MyPageFragment", "User ID is null.")
         }
     }
 

@@ -1,4 +1,4 @@
-package com.sopt.now.ui.mypage
+package com.sopt.now.presentation.mypage
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
