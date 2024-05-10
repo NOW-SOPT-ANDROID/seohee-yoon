@@ -1,4 +1,4 @@
-package com.sopt.now.ui.login
+package com.sopt.now.presentation.login
 
 
 import android.content.Intent
@@ -6,23 +6,18 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.sopt.now.data.KeyStorage.USER_ID
 import com.sopt.now.data.model.request.RequestLoginDto
 import com.sopt.now.databinding.ActivityLoginBinding
-import com.sopt.now.ui.main.MainActivity
-import com.sopt.now.ui.signup.SignUpActivity
+import com.sopt.now.presentation.main.MainActivity
+import com.sopt.now.presentation.signup.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-
-    private val viewModel by viewModels<LoginViewModel>()
-    private var userId: String = ""
-
+    private val viewModel:LoginViewModel by viewModels<LoginViewModel>{ LoginViewModelFactory() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         initSignupBtnClickListener()
         initView()
@@ -43,11 +38,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT,
             ).show()
 
-            val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
-                userId = state.userId ?: ""
-                putExtra(USER_ID, userId)
-            }
-            startActivity(intent)
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
         }
     }
 
