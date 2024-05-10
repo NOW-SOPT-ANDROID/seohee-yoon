@@ -1,4 +1,4 @@
-package com.sopt.now.data.dto.response
+package com.sopt.now.data.model.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -8,7 +8,7 @@ data class ResponseUserDto(
     @SerialName("code")
     val code: Int,
     @SerialName("data")
-    val data: UserData?,
+    val data: UserData,
     @SerialName("message")
     val message: String
 ) {

@@ -1,4 +1,4 @@
-package com.sopt.now.ui.home
+package com.sopt.now.presentation.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -54,8 +54,8 @@ class MultiAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun setUser(userData: ResponseUserDto?) {
-        user = userData?.data!!
+    fun setUser(userData: ResponseUserDto) {
+        user = userData.data
         notifyDataSetChanged()
     }
 }
