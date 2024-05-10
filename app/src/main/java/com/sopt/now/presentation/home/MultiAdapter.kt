@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sopt.now.data.Friend
-import com.sopt.now.data.dto.response.ResponseUserDto
+import com.sopt.now.data.model.response.ResponseUserDto
 import com.sopt.now.databinding.ItemUserBinding
 import com.sopt.now.databinding.ItemFriendBinding
 

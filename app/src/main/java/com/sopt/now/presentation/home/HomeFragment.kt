@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sopt.now.data.Friend
 import com.sopt.now.data.KeyStorage.USER_ID
 import com.sopt.now.data.ServicePool
-import com.sopt.now.data.dto.response.ResponseFriendDto
-import com.sopt.now.data.dto.response.ResponseUserDto
+import com.sopt.now.data.model.response.ResponseFriendDto
+import com.sopt.now.data.model.response.ResponseUserDto
 import com.sopt.now.databinding.FragmentHomeBinding
 import retrofit2.Call
 import retrofit2.Callback

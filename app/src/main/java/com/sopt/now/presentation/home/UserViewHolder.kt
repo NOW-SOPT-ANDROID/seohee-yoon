@@ -1,7 +1,7 @@
 package com.sopt.now.ui.home
 
 import androidx.recyclerview.widget.RecyclerView
-import com.sopt.now.data.dto.response.ResponseUserDto
+import com.sopt.now.data.model.response.ResponseUserDto
 import com.sopt.now.databinding.ItemUserBinding
 
 class UserViewHolder(private val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {

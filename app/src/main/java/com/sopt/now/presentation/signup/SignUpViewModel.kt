@@ -3,8 +3,8 @@ package com.sopt.now.ui.signup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sopt.now.data.ServicePool
-import com.sopt.now.data.dto.request.RequestSignUpDto
-import com.sopt.now.data.dto.response.ResponseSignUpDto
+import com.sopt.now.data.model.request.RequestSignUpDto
+import com.sopt.now.data.model.response.ResponseSignUpDto
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback

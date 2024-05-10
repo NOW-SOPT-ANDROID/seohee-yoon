@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import com.sopt.now.data.dto.request.RequestSignUpDto
+import com.sopt.now.data.model.request.RequestSignUpDto
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.ui.login.LoginActivity
 

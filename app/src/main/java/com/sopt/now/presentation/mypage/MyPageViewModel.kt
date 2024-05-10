@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sopt.now.data.ServicePool
-import com.sopt.now.data.dto.response.ResponseUserDto
-import com.sopt.now.data.dto.response.ResponseUserDto.UserData
+import com.sopt.now.data.model.response.ResponseUserDto
+import com.sopt.now.data.model.response.ResponseUserDto.UserData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
