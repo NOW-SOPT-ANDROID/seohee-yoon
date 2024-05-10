@@ -6,14 +6,15 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.sopt.now.data.model.request.RequestLoginDto
+import com.sopt.now.data.ViewModelFactory
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.presentation.signup.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private val viewModel:LoginViewModel by viewModels<LoginViewModel>{ LoginViewModelFactory() }
+
+    private val viewModel:LoginViewModel by viewModels<LoginViewModel>{ ViewModelFactory() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -26,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initView() {
         binding.btnLoginToSignin.setOnClickListener {
-            viewModel.login(getLoginRequestDto())
+            viewModel.login(getLoginData())
         }
     }
 
@@ -42,14 +43,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun getLoginRequestDto(): RequestLoginDto {
+    private fun getLoginData(): Pair<String, String> {
         val id = binding.etLoginId.text.toString()
         val password = binding.etLoginPw.text.toString()
 
-        return RequestLoginDto(
-            authenticationId = id,
-            password = password
-        )
+        return Pair(id, password)
     }
 
     private fun initSignupBtnClickListener() {

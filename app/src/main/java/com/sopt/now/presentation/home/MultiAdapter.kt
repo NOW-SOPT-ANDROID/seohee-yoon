@@ -50,7 +50,7 @@ class MultiAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setFriendList(friendList: List<Friend>) {
-        this.friendList = friendList.toList()
+        this.friendList = friendList
         notifyDataSetChanged()
     }
 

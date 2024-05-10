@@ -5,15 +5,17 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
+import androidx.lifecycle.ViewModel
+import com.sopt.now.data.ViewModelFactory
 import com.sopt.now.data.model.request.RequestSignUpDto
 import com.sopt.now.databinding.ActivitySignUpBinding
+import com.sopt.now.domain.model.AuthData
 import com.sopt.now.presentation.login.LoginActivity
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
 
-    private val viewModel by viewModels<SignUpViewModel>()
+    private val viewModel by viewModels<SignUpViewModel>{ ViewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +28,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun initView() {
         binding.btnSignupToSignup.setOnClickListener {
-            viewModel.signUp(getSignUpRequestDto())
+            viewModel.signUp(getAuthData())
         }
     }
 
@@ -43,10 +45,10 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun getSignUpRequestDto(): RequestSignUpDto {
-        return RequestSignUpDto(
-            authenticationId = binding.etSignupId.text.toString(),
-            password = binding.etSignupPw.text.toString(),
+    private fun getAuthData(): AuthData {
+        return AuthData(
+            id = binding.etSignupId.text.toString(),
+            pw = binding.etSignupPw.text.toString(),
             nickname = binding.etSignupNickname.text.toString(),
             phone = binding.etSignupPhone.text.toString()
         )
@@ -54,13 +56,5 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun navigateToLogin() {
         startActivity(Intent(this, LoginActivity::class.java))
-    }
-
-    private fun showMessage(message: String) {
-        Snackbar.make(
-            binding.root,
-            message,
-            Snackbar.LENGTH_SHORT
-        ).show()
     }
 }

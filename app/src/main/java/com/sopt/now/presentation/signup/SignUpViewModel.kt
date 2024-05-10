@@ -1,52 +1,55 @@
 package com.sopt.now.presentation.signup
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sopt.now.data.ServicePool
-import com.sopt.now.data.model.request.RequestSignUpDto
-import com.sopt.now.data.model.response.ResponseSignUpDto
+import androidx.lifecycle.viewModelScope
+import com.sopt.now.domain.model.AuthData
+import com.sopt.now.domain.repository.AuthRepository
+import kotlinx.coroutines.launch
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
-class SignUpViewModel : ViewModel() {
-    private val authService by lazy { ServicePool.authService }
+class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() {
+    private val _liveData = MutableLiveData<SignUpState>() // 외부에서 접근 못하게 backing property
+    val liveData: LiveData<SignUpState> = _liveData
 
-    val liveData = MutableLiveData<SignUpState>()
-
-    fun signUp(request: RequestSignUpDto) {
-        authService.signUp(request).enqueue(object : Callback<ResponseSignUpDto> {
-            override fun onResponse(
-                call: Call<ResponseSignUpDto>,
-                response: Response<ResponseSignUpDto>,
-            ) {
-                if (response.isSuccessful) {
-                    val data: ResponseSignUpDto? = response.body()
+    fun signUp(authData: AuthData) {
+        viewModelScope.launch {
+            Log.e("여기", "viewmodelscope")
+            authRepository.signUp(
+                authData = authData
+            )
+                .onSuccess { response: Response<Unit> ->
                     val userId = response.headers()["location"]
+                    if (response.isSuccessful) {
+                        _liveData.value = SignUpState(
+                            isSuccess = true,
+                            message = "회원가입 성공! 유저의 ID는 $userId 입니다"
+                        )
+                    }
 
-                    liveData.value = SignUpState(
-                        isSuccess = true,
-                        message = "회원가입 성공! 유저의 ID는 $userId 입니다"
-                    )
+                    else {
+                        val errorBody = response.errorBody()?.string() ?: "No error message"
+                        val errorMessage = JSONObject(errorBody).getString("message")
+                        _liveData.value = SignUpState(
+                            isSuccess = false,
+                            message = errorMessage
+                        )
 
-                } else {
-                    val errorBody = response.errorBody()?.string() ?: "No error message"
-                    val errorMessage = JSONObject(errorBody).getString("message")
-
-                    liveData.value = SignUpState(
-                        isSuccess = false,
-                        message = errorMessage
-                    )
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseSignUpDto>, t: Throwable) {
-                liveData.value = SignUpState(
-                    isSuccess = false,
-                    message = "서버에러"
-                )
-            }
-        })
+                .onFailure {
+                    Log.e("throw", it.message.toString())
+                    _liveData.value = it.message?.let { it1 ->
+                        SignUpState(
+                            isSuccess = false,
+                            message = it1
+                        )
+                    }
+                }
+        }
     }
 }
