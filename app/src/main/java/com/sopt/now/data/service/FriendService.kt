@@ -1,13 +1,15 @@
 package com.sopt.now.data.service
 
-import com.sopt.now.data.dto.response.ResponseFriendDto
+import com.sopt.now.util.KeyStorage.PAGE
+import com.sopt.now.util.KeyStorage.USERS
+import com.sopt.now.data.model.response.ResponseFriendDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface FriendService {
-    @GET("users")
+    @GET(USERS)
     fun getFriend(
-        @Query("page") page: Int
+        @Query(PAGE) page: Int
     ) : Call<ResponseFriendDto>
 }
