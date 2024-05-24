@@ -1,4 +1,4 @@
-package com.sopt.now.ui.search
+package com.sopt.now.presentation.search
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

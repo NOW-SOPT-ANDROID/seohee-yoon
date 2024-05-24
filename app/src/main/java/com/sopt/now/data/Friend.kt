@@ -1,9 +1,8 @@
 package com.sopt.now.data
 
-import androidx.annotation.DrawableRes
 
-data class Friend (
-    @DrawableRes val profileImage: Int,
+data class Friend(
+    val profileImage: String,
     val name: String,
     val phone: String
 )

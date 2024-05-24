@@ -5,7 +5,7 @@
     android:id="@+id/layout_signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.signup.SignUpActivity">
+    tools:context=".presentation.signup.SignUpActivity">
 
     <TextView
         android:id="@+id/tv_signup_title"

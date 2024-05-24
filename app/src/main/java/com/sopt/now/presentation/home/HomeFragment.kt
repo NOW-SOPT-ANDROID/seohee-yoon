@@ -1,4 +1,4 @@
-package com.sopt.now.ui.home
+package com.sopt.now.presentation.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sopt.now.data.Friend
-import com.sopt.now.data.User
 import com.sopt.now.databinding.FragmentHomeBinding
+import com.sopt.now.util.KeyStorage.USER_PREF
+import com.sopt.now.util.MainApplication
 
-class HomeFragment(private val user: User) : Fragment() {
+class HomeFragment() : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
         get() = _binding ?: throw IllegalStateException("Binding is null")
 
     private lateinit var multiAdapter: MultiAdapter
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel: HomeViewModel by viewModels<HomeViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,28 +32,26 @@ class HomeFragment(private val user: User) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         multiAdapter = MultiAdapter()
+
         binding.rvHomeFriends.apply {
             adapter = multiAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        combineList()
+        observeViewModel()
     }
 
-    private fun loadFriendList(): MutableList<Friend> {
-        val friendList: MutableList<Friend> = mutableListOf()
-        friendList.addAll(viewModel.mockFriendList)
-
-        return friendList
-    }
-
-    private fun combineList() {
-        val combinedList = mutableListOf<Any>().apply {
-            add(user.copy())
-            addAll(loadFriendList())
+    private fun observeViewModel() {
+        viewModel.userData.observe(viewLifecycleOwner) {
+            multiAdapter.setUser(it)
         }
 
-        multiAdapter.setItemList(combinedList)
+        viewModel.friendList.observe(viewLifecycleOwner) {
+            multiAdapter.setFriendList(it)
+        }
+
+        viewModel.getUserData(MainApplication.prefsManager.getString(USER_PREF, ""))
+        viewModel.getFriendData()
     }
 
     override fun onDestroyView() {
