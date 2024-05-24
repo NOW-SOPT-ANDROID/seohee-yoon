@@ -12,8 +12,8 @@ import retrofit2.HttpException
 import retrofit2.Response
 
 class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
-    private val _liveData = MutableLiveData<LoginState>()
-    val liveData: LiveData<LoginState> = _liveData
+    private val _loginData = MutableLiveData<LoginState>()
+    val loginData: LiveData<LoginState> = _loginData
 
     fun login(authData: Pair<String, String>) {
         viewModelScope.launch {
@@ -24,7 +24,7 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
                 .onSuccess { response: Response<Unit> ->
                     val userId = response.headers()["location"]
 
-                    _liveData.value = LoginState(
+                    _loginData.value = LoginState(
                         isSuccess = true,
                         message = "$userId 님 환영합니다!",
                         userId = userId
@@ -38,7 +38,7 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
                     }else {
 
                     }
-                    _liveData.value = LoginState(
+                    _loginData.value = LoginState(
                         isSuccess = false,
                         message = "서버 에러",
                         userId = null

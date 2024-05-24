@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import com.sopt.now.data.ViewModelFactory
-import com.sopt.now.data.model.request.RequestSignUpDto
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.domain.model.AuthData
 import com.sopt.now.presentation.login.LoginActivity
@@ -22,11 +20,11 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initView()
+        initSignUpBtnClickListener()
         initObserver()
     }
 
-    private fun initView() {
+    private fun initSignUpBtnClickListener() {
         binding.btnSignupToSignup.setOnClickListener {
             viewModel.signUp(getAuthData())
         }

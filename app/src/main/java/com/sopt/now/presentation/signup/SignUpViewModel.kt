@@ -12,8 +12,8 @@ import org.json.JSONObject
 import retrofit2.Response
 
 class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() {
-    private val _liveData = MutableLiveData<SignUpState>() // 외부에서 접근 못하게 backing property
-    val liveData: LiveData<SignUpState> = _liveData
+    private val _signUpData = MutableLiveData<SignUpState>() // 외부에서 접근 못하게 backing property
+    val liveData: LiveData<SignUpState> = _signUpData
 
     fun signUp(authData: AuthData) {
         viewModelScope.launch {
@@ -24,7 +24,7 @@ class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() 
                 .onSuccess { response: Response<Unit> ->
                     val userId = response.headers()["location"]
                     if (response.isSuccessful) {
-                        _liveData.value = SignUpState(
+                        _signUpData.value = SignUpState(
                             isSuccess = true,
                             message = "회원가입 성공! 유저의 ID는 $userId 입니다"
                         )
@@ -33,7 +33,7 @@ class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() 
                     else {
                         val errorBody = response.errorBody()?.string() ?: "No error message"
                         val errorMessage = JSONObject(errorBody).getString("message")
-                        _liveData.value = SignUpState(
+                        _signUpData.value = SignUpState(
                             isSuccess = false,
                             message = errorMessage
                         )
@@ -43,7 +43,7 @@ class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() 
 
                 .onFailure {
                     Log.e("throw", it.message.toString())
-                    _liveData.value = it.message?.let { it1 ->
+                    _signUpData.value = it.message?.let { it1 ->
                         SignUpState(
                             isSuccess = false,
                             message = it1

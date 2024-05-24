@@ -32,34 +32,36 @@ class HomeViewModel() : ViewModel() {
                         friend -> Friend(friend.avatar, friend.firstName, friend.email)
                     })
                 } else {
-                    Log.d("HomeViewModel", "Failed to load user data: ${response.message()}")
+                    Log.e("HomeViewModel", "Failed to load user data: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<ResponseFriendDto>, t: Throwable) {
-                Log.d("HomeViewModel", "Load friend data error : ${t.message}")
+                Log.e("HomeViewModel", "Load friend data error : ${t.message}")
             }
 
         })
     }
 
     fun getUserData(userId: String?) {
-        ServicePool.userService.getUser(userId).enqueue(object : Callback<ResponseUserDto> {
-            override fun onResponse(
-                call: Call<ResponseUserDto>,
-                response: Response<ResponseUserDto>
-            ) {
-                if (response.isSuccessful) {
-                    val data: ResponseUserDto? = response.body()
-                    userData.postValue(data)
-                } else {
-                    Log.d("HomeViewModel", "Failed to load user data: ${response.message()}")
+        if (userId != null) {
+            ServicePool.userService.getUser(userId).enqueue(object : Callback<ResponseUserDto> {
+                override fun onResponse(
+                    call: Call<ResponseUserDto>,
+                    response: Response<ResponseUserDto>
+                ) {
+                    if (response.isSuccessful) {
+                        val data: ResponseUserDto? = response.body()
+                        userData.postValue(data)
+                    } else {
+                        Log.e("HomeViewModel", "Failed to load user data: ${response.message()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseUserDto>, t: Throwable) {
-                Log.d("HomeViewModel", "Failed to load user data: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<ResponseUserDto>, t: Throwable) {
+                    Log.e("HomeViewModel", "Failed to load user data: ${t.message}")
+                }
+            })
+        }
     }
 }

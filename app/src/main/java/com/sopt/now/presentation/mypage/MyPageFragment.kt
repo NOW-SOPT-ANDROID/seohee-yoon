@@ -42,6 +42,10 @@ class MyPageFragment() : Fragment() {
     private fun initViews() {
         viewModel.getUserData(MainApplication.prefsManager.getString(USER_PREF, ""))
 
+        observeUserData()
+    }
+
+    private fun observeUserData() {
         binding.apply {
             viewModel.userData.observe(viewLifecycleOwner) { userData ->
                 if (userData != null) {

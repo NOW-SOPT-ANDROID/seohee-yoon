@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        viewModel.liveData.observe(this) { state ->
+        viewModel.loginData.observe(this) { state ->
             Toast.makeText(
                 this@LoginActivity,
                 state.message,

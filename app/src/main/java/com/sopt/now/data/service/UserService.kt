@@ -11,6 +11,6 @@ import retrofit2.http.Header
 interface UserService {
     @GET("$MEMBER/$INFO")
     fun getUser(
-        @Header(MEMBER_ID) userId: String?
+        @Header(MEMBER_ID) userId: String
     ): Call<ResponseUserDto>
 }
