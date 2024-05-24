@@ -8,7 +8,7 @@ data class ResponseUserDto(
     @SerialName("code")
     val code: Int,
     @SerialName("data")
-    val data: UserData?,
+    val data: UserData,
     @SerialName("message")
     val message: String
 ) {

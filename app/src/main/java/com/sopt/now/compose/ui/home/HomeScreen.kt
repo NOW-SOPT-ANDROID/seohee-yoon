@@ -37,10 +37,9 @@ fun HomeScreen(userId: String, viewModel: HomeViewModel = viewModel()) {
     val userData = viewModel.userData.value
     val friendList = viewModel.friendList.value
 
-    viewModel.getUserData(userId)
-
     LaunchedEffect(Unit) {
         getFriendData(viewModel)
+        viewModel.getUserData(userId)
     }
 
     LazyColumn {
@@ -162,7 +161,7 @@ fun getFriendData(viewModel: HomeViewModel) {
 
                     friend?.forEach { friendData ->
                         viewModel.friendList.value += Friend(
-                            friendData.avatar, friendData.first_name, friendData.email
+                            friendData.avatar, friendData.firstName, friendData.email
                         )
                     }
                 } else {

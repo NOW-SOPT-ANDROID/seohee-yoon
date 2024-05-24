@@ -1,6 +1,7 @@
 package com.sopt.now.compose.ui.mypage
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sopt.now.compose.data.ServicePool
@@ -10,7 +11,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MyPageViewModel() : ViewModel() {
-    var userData = MutableLiveData<ResponseUserDto.UserData?>()
+    private val _userData = MutableLiveData<ResponseUserDto.UserData>()
+    val userData: LiveData<ResponseUserDto.UserData> = _userData
 
     fun getUserData(userId: String) {
         ServicePool.userService.getUser(userId).enqueue(object : Callback<ResponseUserDto> {
@@ -19,10 +21,9 @@ class MyPageViewModel() : ViewModel() {
                 response: Response<ResponseUserDto>
             ) {
                 if (response.isSuccessful) {
-                    val data: ResponseUserDto? = response.body()
-                    userData.value = data?.data
+                    _userData.value = response.body()?.data
 
-                    Log.d("MyPageViewModel", "User data: ${userData.value}")
+                    Log.d("MyPageViewModel", "User data: ${_userData.value}")
                 } else {
                     Log.d("MyPageViewModel", "Failed to load user data: $userId")
                 }

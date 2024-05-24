@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.sopt.now.compose.data.Key.USER_ID
 import com.sopt.now.compose.data.dto.request.RequestSignUpDto
 import com.sopt.now.compose.ui.login.LoginActivity
+import com.sopt.now.compose.ui.login.LoginScreen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
 
@@ -58,12 +59,15 @@ class SignUpActivity : ComponentActivity() {
     }
 
     private fun initObserver() {
-        viewModel.liveData.observe(this) {
+        viewModel.liveData.observe(this) { state ->
             Toast.makeText(
                 this@SignUpActivity,
-                it.message,
+                state.message,
                 Toast.LENGTH_SHORT,
             ).show()
+
+            if(state.isSuccess)
+                LoginActivity()
         }
     }
 }
