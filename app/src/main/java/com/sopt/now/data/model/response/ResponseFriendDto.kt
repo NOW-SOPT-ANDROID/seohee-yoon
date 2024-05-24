@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ResponseFriendDto(
     @SerialName("data")
-    val `data`: List<Data>,
+    val `data`: List<FriendData>,
     @SerialName("page")
     val page: Int,
     @SerialName("per_page")
@@ -19,7 +19,7 @@ data class ResponseFriendDto(
     val totalPages: Int
 ) {
     @Serializable
-    data class Data(
+    data class FriendData(
         @SerialName("avatar")
         val avatar: String,
         @SerialName("email")
