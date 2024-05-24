@@ -12,66 +12,73 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.User
+import com.sopt.now.compose.data.dto.response.ResponseUserDto
 import com.sopt.now.compose.ui.login.LoginActivity
 
 @Composable
-fun MyPageScreen(user: User) {
+fun MyPageScreen(userId: String) {
     val context: Context = LocalContext.current
+    val viewModel: MyPageViewModel = viewModel()
+
+    LaunchedEffect(Unit) {
+        viewModel.getUserData(userId)
+    }
+
+    val userData: ResponseUserDto.UserData? by viewModel.userData.observeAsState()
 
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier.padding(30.dp)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(
                     id = R.drawable.img_mypage_profile
                 ),
                 contentDescription = "mypage"
             )
-            Text(
-                text = user.name,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(start = 16.dp)
-            )
+            userData?.nickname?.let {
+                Text(
+                    text = it,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(start = 16.dp)
+                )
+            }
         }
+
         Text(
             text = "ID",
             fontSize = 24.sp,
             modifier = Modifier.padding(top = 20.dp)
         )
-        Text(
-            text = user.id,
-            fontSize = 20.sp
-        )
-        Text(
-            text = "비밀번호",
-            fontSize = 24.sp,
-            modifier = Modifier.padding(top = 20.dp)
-        )
-        Text(
-            text = user.password,
-            fontSize = 20.sp
-        )
+        userData?.let {
+            Text(
+                text = it.authenticationId,
+                fontSize = 20.sp
+            )
+        }
         Text(
             text = "전화번호",
             fontSize = 24.sp,
             modifier = Modifier.padding(top = 20.dp)
         )
-        Text(
-            text = user.phone,
-            fontSize = 20.sp
-        )
+        userData?.let {
+            Text(
+                text = it.phone,
+                fontSize = 20.sp
+            )
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
 

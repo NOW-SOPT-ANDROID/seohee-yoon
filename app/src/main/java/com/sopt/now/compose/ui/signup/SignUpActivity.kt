@@ -2,8 +2,10 @@ package com.sopt.now.compose.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,15 +30,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.now.compose.data.Key.USER_ID
+import com.sopt.now.compose.data.dto.request.RequestSignUpDto
 import com.sopt.now.compose.ui.login.LoginActivity
-import com.sopt.now.compose.data.User
+import com.sopt.now.compose.ui.login.LoginScreen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
 
 class SignUpActivity : ComponentActivity() {
+    val viewModel by viewModels<SignUpViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -45,16 +50,30 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SignUpScreen()
+                    SignUpScreen(viewModel)
                 }
             }
+        }
+
+        initObserver()
+    }
+
+    private fun initObserver() {
+        viewModel.liveData.observe(this) { state ->
+            Toast.makeText(
+                this@SignUpActivity,
+                state.message,
+                Toast.LENGTH_SHORT,
+            ).show()
+
+            if(state.isSuccess)
+                LoginActivity()
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(viewModel: SignUpViewModel) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -63,7 +82,6 @@ fun SignUpScreen() {
     var userPassword by remember { mutableStateOf("") }
     var userNickname by remember { mutableStateOf("") }
     var userPhone by remember { mutableStateOf("") }
-
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -166,18 +184,16 @@ fun SignUpScreen() {
                         }
 
                         else -> {
-                            coroutineScope.launch {
-                                snackbarHostState.showSnackbar(
-                                    "회원가입 성공",
-                                    duration = SnackbarDuration.Long
-                                )
-                            }
+                            val signUpRequest = RequestSignUpDto(
+                                authenticationId = userId,
+                                password = userPassword,
+                                nickname = userNickname,
+                                phone = userPhone
+                            )
 
-                            val user = User(userId, userPassword, userNickname, userPhone)
-                            val intent = Intent(context, LoginActivity::class.java)
-                            intent.putExtra("user", user)
+                            viewModel.signUp(signUpRequest)
+                            context.startActivity(Intent(context, LoginActivity::class.java))
 
-                            context.startActivity(intent)
                         }
                     }
                 },

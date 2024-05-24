@@ -2,6 +2,8 @@ package com.sopt.now.compose.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -29,12 +31,23 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.MutableLiveData
+import com.sopt.now.compose.data.Key.USER_ID
+import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.User
+import com.sopt.now.compose.data.dto.request.RequestLoginDto
+import com.sopt.now.compose.data.dto.response.ResponseLoginDto
 import com.sopt.now.compose.ui.main.MainActivity
 import com.sopt.now.compose.ui.signup.SignUpActivity
+import com.sopt.now.compose.ui.signup.SignUpState
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import org.w3c.dom.Text
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,21 +58,20 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val user = intent.getParcelableExtra<User>("user")
-                    LoginScreen(user ?: User("", "", "", ""))
+                    LoginScreen()
                 }
             }
         }
     }
 }
 
+
 @Composable
-fun LoginScreen(user: User) {
+fun LoginScreen() {
     var id by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
 
     val snackbarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
 
     val context = LocalContext.current
 
@@ -112,18 +124,55 @@ fun LoginScreen(user: User) {
 
             Button(
                 onClick = {
-                    if (user.id == id && user.password == pw && user.id.isNotBlank() && user.password.isNotBlank()) {
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar("로그인 성공")
+                    val request = RequestLoginDto(
+                        authenticationId = id,
+                        password = pw,
+                    )
+                    val authService by lazy { ServicePool.authService }
+                    val liveData = MutableLiveData<LoginState>()
+
+                    authService.login(request).enqueue(object : Callback<ResponseLoginDto> {
+                        override fun onResponse(
+                            call: Call<ResponseLoginDto>,
+                            response: Response<ResponseLoginDto>
+                        ) {
+                            if (response.isSuccessful) {
+                                val data: ResponseLoginDto? = response.body()
+                                val userId = response.headers()["location"]
+
+                                val intent = Intent(context, MainActivity::class.java)
+                                intent.putExtra(USER_ID, userId)
+
+                                liveData.value = LoginState(
+                                    isSuccess = true,
+                                    message = "$userId 님 환영합니다!",
+                                    userId = userId
+                                )
+
+                                Toast.makeText(context, "$userId 님 환영합니다!", Toast.LENGTH_SHORT).show()
+                                context.startActivity(intent)
+                            } else {
+                                val errorBody = response.errorBody()?.string() ?: "No error message"
+                                val errorMessage = JSONObject(errorBody).getString("message")
+
+                                liveData.value = LoginState(
+                                    isSuccess = false,
+                                    message = errorMessage,
+                                    userId = null
+                                )
+
+                                Toast.makeText(context, "아이디와 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
+                            }
                         }
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.putExtra("user", user)
-                        context.startActivity(intent)
-                    } else {
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar("아이디 또는 비밀번호가 일치하지 않습니다")
+
+                        override fun onFailure(call: Call<ResponseLoginDto>, t: Throwable) {
+                            liveData.value = LoginState(
+                                isSuccess = false,
+                                message = "서버에러",
+                                userId = null
+                            )
                         }
-                    }
+                    })
                 },
                 modifier = Modifier
                     .fillMaxWidth()
